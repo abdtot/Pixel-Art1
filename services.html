@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>الخدمات المتقدمة | بيكسل آرت</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a9396;
+            --primary-dark: #005f73;
+            --primary-light: #94d2bd;
+            --primary-gradient: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            --secondary-color: #ee9b00;
+            --secondary-dark: #ca6702;
+            --secondary-light: #ffb347;
+            --success-color: #2a9d8f;
+            --warning-color: #e9c46a;
+            --danger-color: #e76f51;
+            --bg-primary: rgba(255, 255, 255, 0.95);
+            --bg-secondary: rgba(248, 250, 252, 0.9);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.25);
+            --transition-fast: 200ms;
+            --transition-medium: 300ms;
+            --transition-slow: 500ms;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                url('./background/designer-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* شريط الحالة */
+        .status-bar {
+            height: 28px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* الهيدر */
+        .app-header {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .back-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title span {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* بطاقة الترحيب */
+        .services-hero {
+            background: linear-gradient(135deg, rgba(10, 147, 150, 0.9), rgba(238, 155, 0, 0.9));
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .services-hero h2 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+        }
+
+        .services-hero p {
+            font-size: 15px;
+            opacity: 0.95;
+            margin: 0 0 20px 0;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* فئات الخدمات */
+        .categories-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .category-card h4 {
+            font-size: 17px;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .category-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+        }
+
+        .category-count {
+            font-size: 11px;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        /* الخدمات المتقدمة */
+        .services-section {
+            margin-bottom: 40px;
+        }
+
+        .services-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .service-tab {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+
+        .service-tab:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .service-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .service-card.premium {
+            border: 2px solid var(--secondary-color);
+        }
+
+        .service-card.popular {
+            border: 2px solid var(--danger-color);
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            z-index: 1;
+        }
+
+        .service-badge.premium {
+            background: var(--secondary-color);
+        }
+
+        .service-badge.popular {
+            background: var(--danger-color);
+        }
+
+        .service-badge.new {
+            background: var(--success-color);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .service-info h4 {
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .service-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .service-features {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .service-features li {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 5px 0;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .service-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .price s {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-left: 5px;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* باقات الاشتراك */
+        .subscription-section {
+            margin-bottom: 40px;
+        }
+
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .plan-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--glass-border);
+            transition: all var(--transition-medium);
+            text-align: center;
+            position: relative;
+        }
+
+        .plan-card.recommended {
+            border-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .plan-card.recommended:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary-color);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .plan-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            margin: 0 auto 20px;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: var(--text-primary);
+        }
+
+        .plan-price {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+        }
+
+        .plan-period {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .plan-features {
+            text-align: right;
+            margin-bottom: 30px;
+        }
+
+        .plan-features li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features li i {
+            color: var(--success-color);
+            margin-left: 10px;
+        }
+
+        /* الأدوات المجانية */
+        .tools-section {
+            margin-bottom: 50px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--success-color), var(--primary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            margin: 0 auto 15px;
+        }
+
+        .tool-card h5 {
+            font-size: 14px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .tool-card span {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* الأسئلة الشائعة */
+        .faq-section {
+            margin-bottom: 50px;
+        }
+
+        .faq-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-question h4 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .faq-toggle {
+            color: var(--primary-color);
+            font-size: 18px;
+            transition: transform var(--transition-fast);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-medium);
+            padding-top: 0;
+        }
+
+        .faq-answer p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+            background: rgba(10, 147, 150, 0.1);
+        }
+
+        .nav-item.active {
+            color: var(--secondary-color);
+            background: rgba(238, 155, 0, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 22px;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .page-title h1 {
+                font-size: 18px;
+            }
+            
+            .services-hero {
+                padding: 20px;
+            }
+            
+            .services-hero h2 {
+                font-size: 20px;
+            }
+            
+            .categories-grid,
+            .services-grid,
+            .subscription-plans {
+                grid-template-columns: 1fr;
+            }
+            
+            .plan-card.recommended {
+                transform: none;
+            }
+            
+            .plan-card.recommended:hover {
+                transform: translateY(-5px);
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-tab {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+            
+            .nav-item i {
+                font-size: 20px;
+            }
+        }
+
+        /* تأثيرات */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط الحالة -->
+    <div class="status-bar">
+        <div class="status-time">
+            <i class="far fa-clock"></i>
+            <span id="currentTime">--:--</span>
+        </div>
+        <div class="status-icons">
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header class="app-header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="page-title">
+                <h1>الخدمات المتقدمة</h1>
+                <span>كل ما يحتاجه المصمم المحترف في مكان واحد</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="search-btn" onclick="toggleSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- قسم الترحيب -->
+        <section class="services-hero animate-fadeIn">
+            <h2>🚀 اكتشف عالم الإبداع</h2>
+            <p>أكثر من 50 خدمة وأداة متقدمة مصممة خصيصاً للمصممين الجرافيكيين</p>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="ابحث عن خدمة أو أداة..." id="searchServices">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- فئات الخدمات -->
+        <section class="categories-section animate-fadeIn">
+            <div class="section-header">
+                <h3>
+                    <i class="fas fa-layer-group"></i>
+                    فئات الخدمات
+                </h3>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterServices('design')">
+                    <div class="category-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h4>أدوات التصميم</h4>
+                    <p>مجموعة متكاملة من أدوات التصميم الاحترافية للجرافيك والويب</p>
+                    <span class="category-count">12 خدمة</span>
+                </div>
+
+                <div class="category-card" onclick="filterServices('ai')">
+                    <div class="category-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>الذكاء الاصطناعي</h4>
+                    <p>أدوات ذكاء اصطناعي متقدمة لتعزيز الإبداع والإنتاجية</p>
+                    <span class="category-count">8 خدمات</span>
+                </div>
+
+                <div class="category-card" onclick="filterServices('resources')">
+                    <div class="category-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h4>الموارد المكتبة</h4>
+                    <p>أكبر مكتبة عربية للموارد المجانية والمدفوعة للمصممين</p>
+                    <span class="category-count">5000+ مورد</span>
+                </div>
+
+                <div class="category-card" onclick="filterServices('learning')">
+                    <div class="category-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>التعليم والتطوير</h4>
+                    <p>دورات وشهادات معتمدة لتطوير مهاراتك التصميمية</p>
+                    <span class="category-count">25 دورة</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- الخدمات المتقدمة -->
+        <section class="services-section animate-fadeIn">
+            <div class="section-header">
+                <h3>
+                    <i class="fas fa-star"></i>
+                    الخدمات المتقدمة
+                </h3>
+            </div>
+
+            <!-- ألسنة التبويب -->
+            <div class="services-tabs">
+                <button class="service-tab active" onclick="filterTab('all')">الكل</button>
+                <button class="service-tab" onclick="filterTab('premium')">بريميوم</button>
+                <button class="service-tab" onclick="filterTab('popular')">الأكثر شيوعاً</button>
+                <button class="service-tab" onclick="filterTab('free')">مجاني</button>
+                <button class="service-tab" onclick="filterTab('new')">جديد</button>
+            </div>
+
+            <!-- شبكة الخدمات -->
+            <div class="services-grid" id="servicesGrid">
+                <!-- خدمة 1 -->
+                <div class="service-card premium" data-category="design" data-tab="premium">
+                    <div class="service-badge premium">بريميوم</div>
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>مصمم الذكاء الاصطناعي المتقدم</h4>
+                            <p>تصميم ذكي باستخدام أحدث تقنيات الذكاء الاصطناعي</p>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li>إنشاء تصاميم ذكية تلقائياً</li>
+                        <li>اقتراحات تحسين التصميم</li>
+                        <li>توليد أفكار إبداعية</li>
+                        <li>تحليل وتقييم التصاميم</li>
+                    </ul>
+                    <div class="service-pricing">
+                        <div class="price">199 ريال <s>299 ريال</s></div>
+                        <button class="subscribe-btn" onclick="subscribeService(1)">اشترك الآن</button>
+                    </div>
+                </div>
+
+                <!-- خدمة 2 -->
+                <div class="service-card popular" data-category="resources" data-tab="popular">
+                    <div class="service-badge popular">الأكثر طلباً</div>
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>مكتبة الألوان الذكية</h4>
+                            <p>آلاف مجموعات الألوان المتوافقة مع التصميم</p>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li>10000+ مجموعة ألوان جاهزة</li>
+                        <li>مولد تدرجات ألوان ذكي</li>
+                        <li>تحليل توافق الألوان</li>
+                        <li>تصدير إلى جميع البرامج</li>
+                    </ul>
+                    <div class="service-pricing">
+                        <div class="price">149 ريال/شهر</div>
+                        <button class="subscribe-btn" onclick="subscribeService(2)">اشترك الآن</button>
+                    </div>
+                </div>
+
+                <!-- خدمة 3 -->
+                <div class="service-card" data-category="design" data-tab="all">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-vector-square"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>مصمم الشعارات الاحترافي</h4>
+                            <p>تصميم شعارات احترافية مع إمكانيات لا نهائية</p>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li>مكتبة رموز وأيقونات</li>
+                        <li>محرر شعارات متقدم</li>
+                        <li>تصدير بدقة عالية</li>
+                        <li>تعديلات غير محدودة</li>
+                    </ul>
+                    <div class="service-pricing">
+                        <div class="price">99 ريال/شهر</div>
+                        <button class="subscribe-btn" onclick="subscribeService(3)">اشترك الآن</button>
+                    </div>
+                </div>
+
+                <!-- خدمة 4 -->
+                <div class="service-card new" data-category="ai" data-tab="new">
+                    <div class="service-badge new">جديد</div>
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>مساعد الكتابة بالذكاء الاصطناعي</h4>
+                            <p>إنشاء محتوى إبداعي ونصوص تسويقية ذكية</p>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li>كتابة وصف المشاريع</li>
+                        <li>إنشاء محتوى وسائل التواصل</li>
+                        <li>توليد أفكار إبداعية</li>
+                        <li>تحسين النصوص الحالية</li>
+                    </ul>
+                    <div class="service-pricing">
+                        <div class="price">129 ريال/شهر</div>
+                        <button class="subscribe-btn" onclick="subscribeService(4)">اشترك الآن</button>
+                    </div>
+                </div>
+
+                <!-- خدمة 5 -->
+                <div class="service-card" data-category="learning" data-tab="all">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>الأكاديمية المميزة</h4>
+                            <p>وصول غير محدود لجميع الدورات المتقدمة</p>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li>100+ دورة تصميم متقدمة</li>
+                        <li>شهادات معتمدة دولياً</li>
+                        <li>دروس حية أسبوعية</li>
+                        <li>مشاريع عملية وتطبيقية</li>
+                    </ul>
+                    <div class="service-pricing">
+                        <div class="price">299 ريال/شهر</div>
+                        <button class="subscribe-btn" onclick="subscribeService(5)">اشترك الآن</button>
+                    </div>
+                </div>
+
+                <!-- خدمة 6 -->
+                <div class="service-card" data-category="resources" data-tab="free">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>مكتبة الخطوط العربية</h4>
+                            <p>أكبر مجموعة من الخطوط العربية الاحترافية</p>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li>500+ خط عربي مميز</li>
+                        <li>تصنيف حسب النوع والاستخدام</li>
+                        <li>معاينة مباشرة</li>
+                        <li>تنزيل مباشر</li>
+                    </ul>
+                    <div class="service-pricing">
+                        <div class="price">مجاني</div>
+                        <button class="subscribe-btn" onclick="subscribeService(6)">استخدم الآن</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- باقات الاشتراك -->
+        <section class="subscription-section animate-fadeIn">
+            <div class="section-header">
+                <h3>
+                    <i class="fas fa-crown"></i>
+                    باقات الاشتراك
+                </h3>
+            </div>
+            <div class="subscription-plans">
+                <!-- الباقة الأساسية -->
+                <div class="plan-card">
+                    <div class="plan-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4 class="plan-name">الأساسية</h4>
+                    <div class="plan-price">99 ريال</div>
+                    <div class="plan-period">/ شهرياً</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 5 خدمات أساسية</li>
+                        <li><i class="fas fa-check"></i> 10 تصاميم شهرياً</li>
+                        <li><i class="fas fa-check"></i> دعم فني أساسي</li>
+                        <li><i class="fas fa-check"></i> مكتبة موارد محدودة</li>
+                        <li><i class="fas fa-check"></i> 3 دورات مجانية</li>
+                    </ul>
+                    <button class="subscribe-btn" onclick="subscribePlan('basic')">اشترك الآن</button>
+                </div>
+
+                <!-- الباقة المتقدمة -->
+                <div class="plan-card recommended">
+                    <div class="plan-badge">الأكثر اختياراً</div>
+                    <div class="plan-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h4 class="plan-name">المتقدمة</h4>
+                    <div class="plan-price">199 ريال</div>
+                    <div class="plan-period">/ شهرياً</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> جميع الخدمات المتقدمة</li>
+                        <li><i class="fas fa-check"></i> تصميمات غير محدودة</li>
+                        <li><i class="fas fa-check"></i> دعم فني مميز 24/7</li>
+                        <li><i class="fas fa-check"></i> مكتبة موارد كاملة</li>
+                        <li><i class="fas fa-check"></i> جميع الدورات متاحة</li>
+                        <li><i class="fas fa-check"></i> أدوات الذكاء الاصطناعي</li>
+                    </ul>
+                    <button class="subscribe-btn" onclick="subscribePlan('pro')" style="background: var(--secondary-color);">اشترك الآن</button>
+                </div>
+
+                <!-- الباقة الاحترافية -->
+                <div class="plan-card">
+                    <div class="plan-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4 class="plan-name">الاحترافية</h4>
+                    <div class="plan-price">499 ريال</div>
+                    <div class="plan-period">/ شهرياً</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> كل شيء في المتقدمة</li>
+                        <li><i class="fas fa-check"></i> أدوات متقدمة حصرية</li>
+                        <li><i class="fas fa-check"></i> جلسات تدريب شخصية</li>
+                        <li><i class="fas fa-check"></i> مراجعة محفظة أعمال</li>
+                        <li><i class="fas fa-check"></i> عروض حصرية للعملاء</li>
+                        <li><i class="fas fa-check"></i> شهادة احترافية معتمدة</li>
+                    </ul>
+                    <button class="subscribe-btn" onclick="subscribePlan('enterprise')">اشترك الآن</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأدوات المجانية -->
+        <section class="tools-section animate-fadeIn">
+            <div class="section-header">
+                <h3>
+                    <i class="fas fa-tools"></i>
+                    أدوات مجانية
+                </h3>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="openTool('color-picker')">
+                    <div class="tool-icon">
+                        <i class="fas fa-eyedropper"></i>
+                    </div>
+                    <h5>أداة اختيار الألوان</h5>
+                    <span>اختر الألوان بذكاء</span>
+                </div>
+
+                <div class="tool-card" onclick="openTool('image-compressor')">
+                    <div class="tool-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h5>ضاغط الصور</h5>
+                    <span>اخفض حجم الصور</span>
+                </div>
+
+                <div class="tool-card" onclick="openTool('font-pairing')">
+                    <div class="tool-icon">
+                        <i class="fas fa-text-height"></i>
+                    </div>
+                    <h5>مقترح الخطوط</h5>
+                    <span>اختر خطوط متوافقة</span>
+                </div>
+
+                <div class="tool-card" onclick="openTool('gradient-generator')">
+                    <div class="tool-icon">
+                        <i class="fas fa-fill-drip"></i>
+                    </div>
+                    <h5>مولد التدرجات</h5>
+                    <span>أنشئ تدرجات رائعة</span>
+                </div>
+
+                <div class="tool-card" onclick="openTool('mockup-generator')">
+                    <div class="tool-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h5>منشئ Mockup</h5>
+                    <span>عرض تصاميمك واقعياً</span>
+                </div>
+
+                <div class="tool-card" onclick="openTool('palette-generator')">
+                    <div class="tool-icon">
+                        <i class="fas fa-swatchbook"></i>
+                    </div>
+                    <h5>مولد الألوان</h5>
+                    <span>أنشئ ألوان متوافقة</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأسئلة الشائعة -->
+        <section class="faq-section animate-fadeIn">
+            <div class="section-header">
+                <h3>
+                    <i class="fas fa-question-circle"></i>
+                    الأسئلة الشائعة
+                </h3>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item" onclick="toggleFAQ(1)">
+                    <div class="faq-question">
+                        <h4>هل يمكنني تجربة الخدمات قبل الشراء؟</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، نقدم تجربة مجانية لمدة 7 أيام لجميع الخدمات المميزة. يمكنك خلالها تجربة جميع الميزات والخدمات قبل الاشتراك.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(2)">
+                    <div class="faq-question">
+                        <h4>كيف يمكنني إلغاء الاشتراك؟</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>يمكنك إلغاء الاشتراك في أي وقت من خلال صفحة إعدادات الحساب. لن يتم تجديد الاشتراك بعد انتهاء الفترة الحالية.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(3)">
+                    <div class="faq-question">
+                        <h4>هل توجد خصومات للمجموعات أو الفرق؟</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، نقدم خصومات خاصة للفرق والشركات. يمكنك التواصل مع فريق المبيعات للحصول على عرض مخصص لاحتياجات فريقك.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(4)">
+                    <div class="faq-question">
+                        <h4>ما هي طرق الدفع المتاحة؟</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نحن ندعم جميع طرق الدفع المحلية في السعودية (مدى، سداد، STC Pay) بالإضافة إلى البطاقات الائتمانية الدولية.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(5)">
+                    <div class="faq-question">
+                        <h4>هل يمكنني الحصول على شهادة بعد إكمال الدورات؟</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، جميع الدورات تمنح شهادات إكمال معتمدة يمكنك إضافتها إلى سيرتك الذاتية ومشاركتها على منصات التوظيف.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav">
+        <a href="dashboard-designer.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        
+        <a href="my-projects.html" class="nav-item">
+            <i class="fas fa-project-diagram"></i>
+            <span>مشاريعي</span>
+        </a>
+        
+        <a href="services.html" class="nav-item active">
+            <i class="fas fa-cogs"></i>
+            <span>الخدمات</span>
+        </a>
+        
+        <a href="jobs.html" class="nav-item">
+            <i class="fas fa-briefcase"></i>
+            <span>الوظائف</span>
+        </a>
+        
+        <a href="messages.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>الرسائل</span>
+        </a>
+    </nav>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            loadUserData();
+            setupSearch();
+        });
+
+        // تحديث الوقت
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // تحميل بيانات المستخدم
+        function loadUserData() {
+            // في التطبيق الحقيقي: جلب بيانات المستخدم من localStorage أو API
+            const userName = localStorage.getItem('userName') || 'مصممنا المبدع';
+            // يمكن تحديث العناصر حسب الحاجة
+        }
+
+        // العودة للصفحة السابقة
+        function goBack() {
+            window.history.back();
+        }
+
+        // البحث في الخدمات
+        function setupSearch() {
+            const searchInput = document.getElementById('searchServices');
+            const services = document.querySelectorAll('.service-card');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                services.forEach(service => {
+                    const serviceName = service.querySelector('h4').textContent.toLowerCase();
+                    const serviceDesc = service.querySelector('p').textContent.toLowerCase();
+                    
+                    if (serviceName.includes(searchTerm) || serviceDesc.includes(searchTerm)) {
+                        service.style.display = 'block';
+                        setTimeout(() => {
+                            service.style.opacity = '1';
+                            service.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        service.style.opacity = '0';
+                        service.style.transform = 'translateY(10px)';
+                        setTimeout(() => {
+                            service.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        }
+
+        // تصفية الخدمات حسب الفئة
+        function filterServices(category) {
+            const services = document.querySelectorAll('.service-card');
+            const tabs = document.querySelectorAll('.service-tab');
+            
+            // إعادة تعيين جميع الألسنة
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelector('.service-tab').classList.add('active');
+            
+            services.forEach(service => {
+                if (category === 'all' || service.getAttribute('data-category') === category) {
+                    service.style.display = 'block';
+                    setTimeout(() => {
+                        service.style.opacity = '1';
+                        service.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    service.style.opacity = '0';
+                    service.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        service.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // تصفية حسب التبويب
+        function filterTab(tab) {
+            const tabs = document.querySelectorAll('.service-tab');
+            const services = document.querySelectorAll('.service-card');
+            
+            // تحديد التبويب النشط
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            services.forEach(service => {
+                if (tab === 'all' || service.getAttribute('data-tab') === tab) {
+                    service.style.display = 'block';
+                    setTimeout(() => {
+                        service.style.opacity = '1';
+                        service.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    service.style.opacity = '0';
+                    service.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        service.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // الاشتراك في خدمة
+        function subscribeService(serviceId) {
+            const serviceName = document.querySelectorAll('.service-card')[serviceId - 1].querySelector('h4').textContent;
+            
+            if (confirm(`هل تريد الاشتراك في خدمة "${serviceName}"؟`)) {
+                // محاكاة عملية الاشتراك
+                showNotification('جاري معالجة طلبك...', 'info');
+                
+                setTimeout(() => {
+                    showNotification(`تم الاشتراك في ${serviceName} بنجاح!`, 'success');
+                    
+                    // في التطبيق الحقيقي: إرسال طلب الاشتراك إلى السيرفر
+                    console.log(`الاشتراك في خدمة ID: ${serviceId}`);
+                }, 1500);
+            }
+        }
+
+        // الاشتراك في باقة
+        function subscribePlan(planType) {
+            const planNames = {
+                'basic': 'الباقة الأساسية',
+                'pro': 'الباقة المتقدمة',
+                'enterprise': 'الباقة الاحترافية'
+            };
+            
+            if (confirm(`هل تريد الاشتراك في ${planNames[planType]}؟`)) {
+                showNotification('جاري توجيهك لصفحة الدفع...', 'info');
+                
+                setTimeout(() => {
+                    // في التطبيق الحقيقي: توجيه لصفحة الدفع
+                    // window.location.href = `checkout.html?plan=${planType}`;
+                    alert(`سيتم توجيهك لصفحة الدفع للاشتراك في ${planNames[planType]}`);
+                }, 1000);
+            }
+        }
+
+        // فتح أداة
+        function openTool(toolName) {
+            const toolNames = {
+                'color-picker': 'أداة اختيار الألوان',
+                'image-compressor': 'ضاغط الصور',
+                'font-pairing': 'مقترح الخطوط',
+                'gradient-generator': 'مولد التدرجات',
+                'mockup-generator': 'منشئ Mockup',
+                'palette-generator': 'مولد الألوان'
+            };
+            
+            showNotification(`جاري فتح ${toolNames[toolName]}...`, 'info');
+            
+            setTimeout(() => {
+                // في التطبيق الحقيقي: توجيه للأداة
+                alert(`تم فتح ${toolNames[toolName]} في نافذة جديدة`);
+            }, 1000);
+        }
+
+        // تبديل الأسئلة الشائعة
+        function toggleFAQ(index) {
+            const faqItem = document.querySelectorAll('.faq-item')[index - 1];
+            faqItem.classList.toggle('active');
+        }
+
+        // إظهار الإشعارات
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            // أنماط الإشعار
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : 'var(--primary-color)'};
+                color: white;
+                padding: 15px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                z-index: 9999;
+                box-shadow: var(--shadow-lg);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // إزالة الإشعار بعد 3 ثوانٍ
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // إضافة أنماط للتحريك
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

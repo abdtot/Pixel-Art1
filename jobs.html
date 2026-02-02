@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>الوظائف المتاحة | بيكسل آرت</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a9396;
+            --primary-dark: #005f73;
+            --primary-light: #94d2bd;
+            --primary-gradient: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            --secondary-color: #ee9b00;
+            --secondary-dark: #ca6702;
+            --secondary-light: #ffb347;
+            --success-color: #2a9d8f;
+            --warning-color: #e9c46a;
+            --danger-color: #e76f51;
+            --bg-primary: rgba(255, 255, 255, 0.95);
+            --bg-secondary: rgba(248, 250, 252, 0.9);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.25);
+            --transition-fast: 200ms;
+            --transition-medium: 300ms;
+            --transition-slow: 500ms;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                url('./background/designer-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* شريط الحالة */
+        .status-bar {
+            height: 28px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* الهيدر */
+        .app-header {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--glass-border);     
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .back-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title span {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-action {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .header-action:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger-color);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid white;
+        }
+
+        /* فلتر الوظائف */
+        .filter-section {
+            padding: 20px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            top: 70px;
+            z-index: 900;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-tab {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-tab:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .filter-tab .count {
+            background: white;
+            color: var(--primary-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .active .count {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .filter-controls {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .filter-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Cairo';
+            transition: all var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(10, 147, 150, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-select {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Cairo';
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .clear-filters {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .clear-filters:hover {
+            background: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* الإحصائيات */
+        .jobs-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all var(--transition-medium);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .stat-icon.all {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .stat-icon.recommended {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+        }
+
+        .stat-icon.urgent {
+            background: linear-gradient(135deg, var(--danger-color), #d64545);
+        }
+
+        .stat-icon.saved {
+            background: linear-gradient(135deg, var(--success-color), #1d7873);
+        }
+
+        .stat-info h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .stat-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 5px 0 0 0;
+        }
+
+        /* عرض الوظائف */
+        .jobs-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* شبكة الوظائف */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* بطاقة الوظيفة */
+        .job-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+            position: relative;
+        }
+
+        .job-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--secondary-color);
+        }
+
+        .job-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            z-index: 1;
+        }
+
+        .badge-urgent {
+            background: var(--danger-color);
+        }
+
+        .badge-featured {
+            background: var(--secondary-color);
+        }
+
+        .badge-new {
+            background: var(--success-color);
+        }
+
+        .badge-premium {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .job-save {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .job-save:hover {
+            background: var(--danger-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .job-save.saved {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .job-header {
+            padding: 25px 25px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .job-title {
+            margin-bottom: 15px;
+        }
+
+        .job-title h3 {
+            font-size: 18px;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .job-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-client {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .client-info h4 {
+            font-size: 14px;
+            margin: 0 0 3px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .client-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating-stars {
+            color: var(--warning-color);
+            font-size: 12px;
+        }
+
+        .rating-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .job-content {
+            padding: 20px 25px;
+        }
+
+        .job-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .job-deadline {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .job-budget {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .job-footer {
+            padding: 20px 25px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn-small {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all var(--transition-fast);
+        }
+
+        .view-btn-small:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .apply-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .apply-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* الوظائف المميزة */
+        .featured-jobs {
+            margin-bottom: 40px;
+        }
+
+        .featured-slider {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            scrollbar-width: thin;
+        }
+
+        .featured-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .featured-slider::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .featured-slider::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .featured-card {
+            min-width: 320px;
+            background: linear-gradient(135deg, rgba(10, 147, 150, 0.9), rgba(238, 155, 0, 0.9));
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            color: var(--secondary-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .featured-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-title h3 {
+            font-size: 20px;
+            margin: 0 0 15px 0;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .featured-description {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .featured-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        .featured-budget {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .featured-apply {
+            background: white;
+            color: var(--secondary-color);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .featured-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* الوظائف المنتهية قريباً */
+        .expiring-jobs {
+            margin-bottom: 40px;
+        }
+
+        .expiring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .expiring-card {
+            background: linear-gradient(135deg, rgba(231, 111, 81, 0.9), rgba(233, 196, 106, 0.9));
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expiring-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .expiring-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .expiring-title h4 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .expiring-time {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .expiring-apply {
+            background: white;
+            color: var(--danger-color);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all var(--transition-fast);
+            margin-top: 15px;
+        }
+
+        .expiring-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* تحميل المزيد */
+        .load-more {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .load-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 15px 50px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all var(--transition-medium);
+        }
+
+        .load-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* أداة اقتراح السعر */
+        .pricing-tool {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .pricing-tool h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0 0 20px 0;
+            color: var(--text-primary);
+        }
+
+        .pricing-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .pricing-input {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Cairo';
+        }
+
+        .pricing-result {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all var(--transition-fast);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            border-top: 1px solid var(--glass-border);
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+            background: rgba(10, 147, 150, 0.1);
+        }
+
+        .nav-item.active {
+            color: var(--secondary-color);
+            background: rgba(238, 155, 0, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 22px;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .filter-section {
+                padding: 15px;
+            }
+            
+            .jobs-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .featured-card {
+                min-width: 280px;
+            }
+            
+            .expiring-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .jobs-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .job-actions {
+                justify-content: space-between;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+            
+            .nav-item i {
+                font-size: 20px;
+            }
+        }
+
+        /* تأثيرات */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* نافذة التقديم */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-medium);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform var(--transition-medium);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط الحالة -->
+    <div class="status-bar">
+        <div class="status-time">
+            <i class="far fa-clock"></i>
+            <span id="currentTime">--:--</span>
+        </div>
+        <div class="status-icons">
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header class="app-header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="page-title">
+                <h1>الوظائف المتاحة</h1>
+                <span>ابحث عن فرص عمل جديدة تناسب مهاراتك</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="header-action" onclick="toggleNotifications()" style="position: relative;">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="header-action" onclick="openSavedJobs()">
+                <i class="fas fa-bookmark"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- فلتر الوظائف -->
+    <section class="filter-section animate-fadeIn">
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterJobs('all')">
+                <i class="fas fa-th-large"></i>
+                <span class="count">48</span>
+                الكل
+            </button>
+            <button class="filter-tab" onclick="filterJobs('recommended')">
+                <i class="fas fa-star"></i>
+                <span class="count">12</span>
+                الموصى بها
+            </button>
+            <button class="filter-tab" onclick="filterJobs('urgent')">
+                <i class="fas fa-bolt"></i>
+                <span class="count">8</span>
+                عاجل
+            </button>
+            <button class="filter-tab" onclick="filterJobs('ui-ux')">
+                <i class="fas fa-palette"></i>
+                <span class="count">15</span>
+                UI/UX
+            </button>
+            <button class="filter-tab" onclick="filterJobs('graphic')">
+                <i class="fas fa-paint-brush"></i>
+                <span class="count">20</span>
+                جرافيك
+            </button>
+            <button class="filter-tab" onclick="filterJobs('video')">
+                <i class="fas fa-video"></i>
+                <span class="count">5</span>
+                مونتاج
+            </button>
+        </div>
+        
+        <div class="filter-controls">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="ابحث عن وظيفة، مهارة، أو كلمة مفتاحية..." id="jobSearch">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <select class="filter-select" id="budgetFilter">
+                <option value="">جميع الميزانيات</option>
+                <option value="0-500">حتى 500 ريال</option>
+                <option value="500-1000">500 - 1000 ريال</option>
+                <option value="1000-2000">1000 - 2000 ريال</option>
+                <option value="2000+">أكثر من 2000 ريال</option>
+            </select>
+            
+            <select class="filter-select" id="durationFilter">
+                <option value="">جميع المدد</option>
+                <option value="1-3">1-3 أيام</option>
+                <option value="3-7">3-7 أيام</option>
+                <option value="1-2">1-2 أسابيع</option>
+                <option value="2+">أكثر من أسبوعين</option>
+            </select>
+            
+            <button class="filter-btn" onclick="applyFilters()">
+                <i class="fas fa-filter"></i>
+                تطبيق الفلتر
+            </button>
+        </div>
+    </section>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- إحصائيات الوظائف -->
+        <section class="jobs-stats animate-fadeIn">
+            <div class="stat-card" onclick="filterJobs('all')">
+                <div class="stat-icon all">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>48</h3>
+                    <p>وظيفة متاحة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="filterJobs('recommended')">
+                <div class="stat-icon recommended">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>12</h3>
+                    <p>موصى بها لك</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="filterJobs('urgent')">
+                <div class="stat-icon urgent">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>8</h3>
+                    <p>وظائف عاجلة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="openSavedJobs()">
+                <div class="stat-icon saved">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>5</h3>
+                    <p>وظائف محفوظة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الوظائف المميزة -->
+        <section class="featured-jobs animate-fadeIn">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-crown"></i>
+                    الوظائف المميزة
+                </h2>
+            </div>
+            
+            <div class="featured-slider">
+                <!-- وظيفة مميزة 1 -->
+                <div class="featured-card animate-pulse">
+                    <div class="featured-badge">
+                        <i class="fas fa-crown"></i>
+                        مميز
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-title">
+                            <h3>مصمم UI/UX لتطبيق جوال مبتكر</h3>
+                        </div>
+                        <p class="featured-description">
+                            شركة ناشئة تبحث عن مصمم UI/UX محترف لتصميم واجهة تطبيق جوال مبتكر في مجال التكنولوجيا المالية.
+                        </p>
+                        <div class="featured-details">
+                            <div class="featured-budget">5,000 ريال</div>
+                            <button class="featured-apply" onclick="applyToJob('featured-ux')">
+                                <i class="fas fa-paper-plane"></i>
+                                تقدم الآن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- وظيفة مميزة 2 -->
+                <div class="featured-card">
+                    <div class="featured-badge">
+                        <i class="fas fa-crown"></i>
+                        مميز
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-title">
+                            <h3>هوية بصرية لشركة تقنية عالمية</h3>
+                        </div>
+                        <p class="featured-description">
+                            شركة تقنية دولية تبحث عن مصمم جرافيك محترف لإنشاء هوية بصرية كاملة تعبر عن رؤية الشركة العالمية.
+                        </p>
+                        <div class="featured-details">
+                            <div class="featured-budget">8,500 ريال</div>
+                            <button class="featured-apply" onclick="applyToJob('featured-branding')">
+                                <i class="fas fa-paper-plane"></i>
+                                تقدم الآن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- وظيفة مميزة 3 -->
+                <div class="featured-card">
+                    <div class="featured-badge">
+                        <i class="fas fa-crown"></i>
+                        مميز
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-title">
+                            <h3>تصميم موقع إلكتروني متكامل</h3>
+                        </div>
+                        <p class="featured-description">
+                            مطلوب مصمم ويب محترف لتصميم وتطوير موقع إلكتروني متكامل لمؤسسة تعليمية كبيرة.
+                        </p>
+                        <div class="featured-details">
+                            <div class="featured-budget">6,200 ريال</div>
+                            <button class="featured-apply" onclick="applyToJob('featured-web')">
+                                <i class="fas fa-paper-plane"></i>
+                                تقدم الآن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- عرض الوظائف -->
+        <section class="jobs-section animate-fadeIn">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-list-ul"></i>
+                    أحدث الوظائف المتاحة
+                </h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" onclick="changeView('grid')">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" onclick="changeView('compact')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- شبكة الوظائف -->
+            <div class="jobs-grid" id="jobsGrid">
+                <!-- وظيفة 1 -->
+                <div class="job-card" data-category="ui-ux" data-urgency="urgent" data-budget="2500">
+                    <div class="job-badge badge-urgent">
+                        <i class="fas fa-bolt"></i>
+                        عاجل
+                    </div>
+                    <div class="job-save" onclick="toggleSaveJob(1, event)">
+                        <i class="far fa-bookmark"></i>
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>مصمم جرافيك لمشروع دعائي ضخم</h3>
+                            <div class="job-meta">
+                                <span class="job-tag">
+                                    <i class="fas fa-palette"></i>
+                                    UI/UX
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-clock"></i>
+                                    5 أيام
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-chart-line"></i>
+                                    متوسط
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-client">
+                            <div class="client-avatar">ش</div>
+                            <div class="client-info">
+                                <h4>شركة التقنية</h4>
+                                <div class="client-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-value">4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content">
+                        <p class="job-description">
+                            مطلوب مصمم جرافيك محترف لتصميم مواد دعائية لمؤتمر تعليمي كبير. يحتاج المشروع إلى شعار رئيسي، بطاقات دعوة، بروشورات، وبانرات إلكترونية بتصميم عصري وجذاب.
+                        </p>
+                        
+                        <div class="job-details">
+                            <div class="job-deadline">
+                                <i class="far fa-clock"></i>
+                                ينتهي في: <strong>3 أيام</strong>
+                            </div>
+                            <div class="job-budget">2,500 ريال</div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="view-btn-small" onclick="viewJobDetails(1, event)">
+                                <i class="fas fa-eye"></i>
+                                معاينة
+                            </button>
+                            <button class="view-btn-small" onclick="shareJob(1, event)">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                        <button class="apply-btn" onclick="applyToJob(1, event)">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم للوظيفة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- وظيفة 2 -->
+                <div class="job-card" data-category="graphic" data-urgency="normal" data-budget="1800">
+                    <div class="job-badge badge-new">
+                        <i class="fas fa-certificate"></i>
+                        جديد
+                    </div>
+                    <div class="job-save" onclick="toggleSaveJob(2, event)">
+                        <i class="far fa-bookmark"></i>
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>مونتاج فيديو دعائي لمدة دقيقتين</h3>
+                            <div class="job-meta">
+                                <span class="job-tag">
+                                    <i class="fas fa-video"></i>
+                                    مونتاج
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-clock"></i>
+                                    7 أيام
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-chart-line"></i>
+                                    مبتدئ
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-client">
+                            <div class="client-avatar">م</div>
+                            <div class="client-info">
+                                <h4>محمد العتيبي</h4>
+                                <div class="client-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-value">4.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content">
+                        <p class="job-description">
+                            مطلوب مونتير فيديو محترف لتحرير فيديو دعائي لمدة دقيقتين. المشروع يتضمن إضافة مؤثرات بصرية، صوتيات، ونصوص متحركة بطريقة إبداعية واحترافية.
+                        </p>
+                        
+                        <div class="job-details">
+                            <div class="job-deadline">
+                                <i class="far fa-clock"></i>
+                                ينتهي في: <strong>5 أيام</strong>
+                            </div>
+                            <div class="job-budget">1,800 ريال</div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="view-btn-small" onclick="viewJobDetails(2, event)">
+                                <i class="fas fa-eye"></i>
+                                معاينة
+                            </button>
+                            <button class="view-btn-small" onclick="shareJob(2, event)">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                        <button class="apply-btn" onclick="applyToJob(2, event)">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم للوظيفة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- وظيفة 3 -->
+                <div class="job-card" data-category="graphic" data-urgency="normal" data-budget="3200">
+                    <div class="job-badge badge-premium">
+                        <i class="fas fa-gem"></i>
+                        بريميوم
+                    </div>
+                    <div class="job-save saved" onclick="toggleSaveJob(3, event)">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>تصميم كتالوج منتجات إلكتروني</h3>
+                            <div class="job-meta">
+                                <span class="job-tag">
+                                    <i class="fas fa-book-open"></i>
+                                    جرافيك
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-clock"></i>
+                                    2 أسبوع
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-chart-line"></i>
+                                    متقدم
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-client">
+                            <div class="client-avatar">إ</div>
+                            <div class="client-info">
+                                <h4>شركة الإلكترونيات</h4>
+                                <div class="client-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="rating-value">5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content">
+                        <p class="job-description">
+                            تصميم كتالوج منتجات إلكتروني متكامل يتضمن 50 صفحة بتصميم احترافي وعصري. يشمل المشروع تصميم الغلاف، تخطيط الصفحات، ومعالجة الصور.
+                        </p>
+                        
+                        <div class="job-details">
+                            <div class="job-deadline">
+                                <i class="far fa-clock"></i>
+                                ينتهي في: <strong>10 أيام</strong>
+                            </div>
+                            <div class="job-budget">3,200 ريال</div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="view-btn-small" onclick="viewJobDetails(3, event)">
+                                <i class="fas fa-eye"></i>
+                                معاينة
+                            </button>
+                            <button class="view-btn-small" onclick="shareJob(3, event)">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                        <button class="apply-btn" onclick="applyToJob(3, event)">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم للوظيفة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- وظيفة 4 -->
+                <div class="job-card" data-category="ui-ux" data-urgency="urgent" data-budget="4200">
+                    <div class="job-badge badge-urgent">
+                        <i class="fas fa-bolt"></i>
+                        عاجل
+                    </div>
+                    <div class="job-save" onclick="toggleSaveJob(4, event)">
+                        <i class="far fa-bookmark"></i>
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>تصميم واجهة تطبيق توصيل طعام</h3>
+                            <div class="job-meta">
+                                <span class="job-tag">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    UI/UX
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-clock"></i>
+                                    2 أسبوع
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-chart-line"></i>
+                                    متقدم
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-client">
+                            <div class="client-avatar">ت</div>
+                            <div class="client-info">
+                                <h4>تطبيق توصيل</h4>
+                                <div class="client-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-value">4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content">
+                        <p class="job-description">
+                            مطلوب مصمم UI/UX محترف لتصميم واجهة تطبيق توصيل طامل كاملة مع التركيز على تجربة المستخدم وسهولة الاستخدام.
+                        </p>
+                        
+                        <div class="job-details">
+                            <div class="job-deadline">
+                                <i class="far fa-clock"></i>
+                                ينتهي في: <strong>7 أيام</strong>
+                            </div>
+                            <div class="job-budget">4,200 ريال</div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="view-btn-small" onclick="viewJobDetails(4, event)">
+                                <i class="fas fa-eye"></i>
+                                معاينة
+                            </button>
+                            <button class="view-btn-small" onclick="shareJob(4, event)">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                        <button class="apply-btn" onclick="applyToJob(4, event)">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم للوظيفة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- وظيفة 5 -->
+                <div class="job-card" data-category="graphic" data-urgency="normal" data-budget="1500">
+                    <div class="job-badge badge-featured">
+                        <i class="fas fa-star"></i>
+                        مميز
+                    </div>
+                    <div class="job-save" onclick="toggleSaveJob(5, event)">
+                        <i class="far fa-bookmark"></i>
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>تصميم شعار بسيط لمشروع شخصي</h3>
+                            <div class="job-meta">
+                                <span class="job-tag">
+                                    <i class="fas fa-paint-brush"></i>
+                                    جرافيك
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-clock"></i>
+                                    3 أيام
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-chart-line"></i>
+                                    مبتدئ
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-client">
+                            <div class="client-avatar">خ</div>
+                            <div class="client-info">
+                                <h4>خالد السالم</h4>
+                                <div class="client-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-value">4.2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content">
+                        <p class="job-description">
+                            مطلوب تصميم شعار بسيط وأنيق لمشروع شخصي في مجال الاستشارات. الشعار يجب أن يكون عصرياً وسهل التذكر.
+                        </p>
+                        
+                        <div class="job-details">
+                            <div class="job-deadline">
+                                <i class="far fa-clock"></i>
+                                ينتهي في: <strong>4 أيام</strong>
+                            </div>
+                            <div class="job-budget">1,500 ريال</div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="view-btn-small" onclick="viewJobDetails(5, event)">
+                                <i class="fas fa-eye"></i>
+                                معاينة
+                            </button>
+                            <button class="view-btn-small" onclick="shareJob(5, event)">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                        <button class="apply-btn" onclick="applyToJob(5, event)">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم للوظيفة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- وظيفة 6 -->
+                <div class="job-card" data-category="video" data-urgency="normal" data-budget="2800">
+                    <div class="job-badge badge-new">
+                        <i class="fas fa-certificate"></i>
+                        جديد
+                    </div>
+                    <div class="job-save saved" onclick="toggleSaveJob(6, event)">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-title">
+                            <h3>مونتاج سلسلة فيديوهات تعليمية</h3>
+                            <div class="job-meta">
+                                <span class="job-tag">
+                                    <i class="fas fa-film"></i>
+                                    مونتاج
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-clock"></i>
+                                    3 أسابيع
+                                </span>
+                                <span class="job-tag">
+                                    <i class="fas fa-chart-line"></i>
+                                    متوسط
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-client">
+                            <div class="client-avatar">أ</div>
+                            <div class="client-info">
+                                <h4>أكاديمية التصميم</h4>
+                                <div class="client-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="rating-value">5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content">
+                        <p class="job-description">
+                            مطلوب مونتير فيديو محترف لتحرير سلسلة مكونة من 10 فيديوهات تعليمية في مجال التصميم الجرافيكي مع إضافة مؤثرات ورسومات متحركة.
+                        </p>
+                        
+                        <div class="job-details">
+                            <div class="job-deadline">
+                                <i class="far fa-clock"></i>
+                                ينتهي في: <strong>14 يوم</strong>
+                            </div>
+                            <div class="job-budget">2,800 ريال</div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-actions">
+                            <button class="view-btn-small" onclick="viewJobDetails(6, event)">
+                                <i class="fas fa-eye"></i>
+                                معاينة
+                            </button>
+                            <button class="view-btn-small" onclick="shareJob(6, event)">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                        <button class="apply-btn" onclick="applyToJob(6, event)">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم للوظيفة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الوظائف المنتهية قريباً -->
+        <section class="expiring-jobs animate-fadeIn">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-hourglass-end"></i>
+                    الوظائف المنتهية قريباً
+                </h2>
+            </div>
+            
+            <div class="expiring-grid">
+                <div class="expiring-card">
+                    <div class="expiring-content">
+                        <div class="expiring-title">
+                            <h4>تصميم بانر إعلاني لموقع إلكتروني</h4>
+                        </div>
+                        <div class="expiring-time">
+                            <i class="fas fa-clock"></i>
+                            ينتهي بعد: <strong>12 ساعة</strong>
+                        </div>
+                        <p>تصميم 3 أحجام مختلفة من البانرات الإعلانية بتصميم جذاب</p>
+                        <button class="expiring-apply" onclick="applyToJob('expiring-1')">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم الآن
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="expiring-card">
+                    <div class="expiring-content">
+                        <div class="expiring-title">
+                            <h4>تصميم بروشور ترويجي</h4>
+                        </div>
+                        <div class="expiring-time">
+                            <i class="fas fa-clock"></i>
+                            ينتهي بعد: <strong>24 ساعة</strong>
+                        </div>
+                        <p>تصميم بروشور ترويجي من صفحتين لمؤسسة خيرية</p>
+                        <button class="expiring-apply" onclick="applyToJob('expiring-2')">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم الآن
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="expiring-card">
+                    <div class="expiring-content">
+                        <div class="expiring-title">
+                            <h4>تصميم هوية لصالون نسائي</h4>
+                        </div>
+                        <div class="expiring-time">
+                            <i class="fas fa-clock"></i>
+                            ينتهي بعد: <strong>36 ساعة</strong>
+                        </div>
+                        <p>تصميم شعار وبطاقات عمل لصالون تجميل نسائي</p>
+                        <button class="expiring-apply" onclick="applyToJob('expiring-3')">
+                            <i class="fas fa-paper-plane"></i>
+                            تقدم الآن
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- أداة اقتراح السعر -->
+        <section class="pricing-tool animate-fadeIn">
+            <h3>
+                <i class="fas fa-calculator"></i>
+                أداة اقتراح السعر الذكي
+            </h3>
+            <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 14px;">
+                احسب سعراً مناسباً لمشروعك القادم بناءً على الخبرة والتعقيد
+            </p>
+            
+            <div class="pricing-inputs">
+                <select class="pricing-input" id="projectType">
+                    <option value="">نوع المشروع</option>
+                    <option value="logo">تصميم شعار</option>
+                    <option value="branding">هوية بصرية كاملة</option>
+                    <option value="web">تصميم موقع إلكتروني</option>
+                    <option value="ui-ux">تصميم UI/UX</option>
+                    <option value="print">تصميم مطبوعات</option>
+                    <option value="video">مونتاج فيديو</option>
+                </select>
+                
+                <select class="pricing-input" id="complexity">
+                    <option value="">مستوى التعقيد</option>
+                    <option value="simple">بسيط</option>
+                    <option value="medium">متوسط</option>
+                    <option value="complex">معقد</option>
+                    <option value="very-complex">معقد جداً</option>
+                </select>
+                
+                <select class="pricing-input" id="experience">
+                    <option value="">مستوى الخبرة</option>
+                    <option value="beginner">مبتدئ (1-2 سنوات)</option>
+                    <option value="intermediate">متوسط (3-5 سنوات)</option>
+                    <option value="expert">خبير (5+ سنوات)</option>
+                    <option value="premium">ممتاز (7+ سنوات)</option>
+                </select>
+                
+                <select class="pricing-input" id="timeline">
+                    <option value="">المدة الزمنية</option>
+                    <option value="urgent">عاجل (1-3 أيام)</option>
+                    <option value="normal">عادي (1 أسبوع)</option>
+                    <option value="flexible">مرن (2+ أسابيع)</option>
+                </select>
+            </div>
+            
+            <div class="pricing-result" id="priceResult">-- ريال</div>
+            
+            <button class="calculate-btn" onclick="calculatePrice()">
+                <i class="fas fa-calculator"></i>
+                احسب السعر المقترح
+            </button>
+        </section>
+
+        <!-- تحميل المزيد -->
+        <div class="load-more">
+            <button class="load-btn" onclick="loadMoreJobs()">
+                <i class="fas fa-sync-alt"></i>
+                تحميل المزيد من الوظائف
+            </button>
+        </div>
+    </main>
+
+    <!-- نافذة التقديم -->
+    <div class="modal-overlay" id="applyModal">
+        <div class="modal-content">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2 style="color: var(--text-primary); font-size: 20px;">
+                    <i class="fas fa-paper-plane"></i>
+                    تقديم عرض للوظيفة
+                </h2>
+                <button class="header-action" onclick="closeApplyModal()" style="width: 36px; height: 36px;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="applyJobContent">
+                <!-- سيتم تحميل محتوى التقديم هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav">
+        <a href="dashboard-designer.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        
+        <a href="my-projects.html" class="nav-item">
+            <i class="fas fa-project-diagram"></i>
+            <span>مشاريعي</span>
+        </a>
+        
+        <a href="services.html" class="nav-item">
+            <i class="fas fa-cogs"></i>
+            <span>الخدمات</span>
+        </a>
+        
+        <a href="jobs.html" class="nav-item active">
+            <i class="fas fa-briefcase"></i>
+            <span>الوظائف</span>
+        </a>
+        
+        <a href="messages.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>الرسائل</span>
+        </a>
+    </nav>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            setupEventListeners();
+            loadJobsData();
+        });
+
+        // تحديث الوقت
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // إعداد المستمعين للأحداث
+        function setupEventListeners() {
+            // البحث في الوظائف
+            const searchInput = document.getElementById('jobSearch');
+            searchInput.addEventListener('input', function() {
+                filterJobsBySearch(this.value);
+            });
+
+            // الفلاتر
+            document.getElementById('budgetFilter').addEventListener('change', applyFilters);
+            document.getElementById('durationFilter').addEventListener('change', applyFilters);
+        }
+
+        // تحميل بيانات الوظائف
+        function loadJobsData() {
+            // في التطبيق الحقيقي: جلب البيانات من API
+            console.log('تحميل بيانات الوظائف...');
+        }
+
+        // العودة للصفحة السابقة
+        function goBack() {
+            window.history.back();
+        }
+
+        // فتح الإشعارات
+        function toggleNotifications() {
+            showNotification('الإشعارات:\n\n• 3 وظائف جديدة متوافقة مع مهاراتك\n• عرض جديد على مشروعك\n• رسالة من عميل', 'info');
+        }
+
+        // فتح الوظائف المحفوظة
+        function openSavedJobs() {
+            showNotification('جاري تحميل الوظائف المحفوظة...', 'info');
+            // في التطبيق الحقيقي: فتح صفحة الوظائف المحفوظة
+        }
+
+        // تصفية الوظائف حسب التبويب
+        function filterJobs(category) {
+            const tabs = document.querySelectorAll('.filter-tab');
+            const jobs = document.querySelectorAll('.job-card');
+            
+            // تحديث التبويب النشط
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // تصفية الوظائف
+            jobs.forEach(job => {
+                if (category === 'all' || job.getAttribute('data-category').includes(category)) {
+                    job.style.display = 'block';
+                    setTimeout(() => {
+                        job.style.opacity = '1';
+                        job.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    job.style.opacity = '0';
+                    job.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        job.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // تصفية الوظائف بالبحث
+        function filterJobsBySearch(searchTerm) {
+            const jobs = document.querySelectorAll('.job-card');
+            searchTerm = searchTerm.toLowerCase();
+            
+            jobs.forEach(job => {
+                const title = job.querySelector('h3').textContent.toLowerCase();
+                const description = job.querySelector('.job-description').textContent.toLowerCase();
+                const client = job.querySelector('.client-info h4').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || client.includes(searchTerm)) {
+                    job.style.display = 'block';
+                    setTimeout(() => {
+                        job.style.opacity = '1';
+                        job.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    job.style.opacity = '0';
+                    job.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        job.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // تطبيق الفلاتر المتقدمة
+        function applyFilters() {
+            const jobs = document.querySelectorAll('.job-card');
+            const budgetFilter = document.getElementById('budgetFilter').value;
+            const durationFilter = document.getElementById('durationFilter').value;
+            
+            jobs.forEach(job => {
+                const budget = parseInt(job.getAttribute('data-budget'));
+                const category = job.getAttribute('data-category');
+                let shouldShow = true;
+                
+                // فلترة حسب الميزانية
+                if (budgetFilter) {
+                    const [min, max] = budgetFilter.split('-').map(val => val === '+' ? Infinity : parseInt(val));
+                    if (max === Infinity) {
+                        shouldShow = shouldShow && budget >= min;
+                    } else if (min === 0) {
+                        shouldShow = shouldShow && budget <= max;
+                    } else {
+                        shouldShow = shouldShow && budget >= min && budget <= max;
+                    }
+                }
+                
+                // يمكن إضافة فلترة المدة هنا
+                
+                if (shouldShow) {
+                    job.style.display = 'block';
+                    setTimeout(() => {
+                        job.style.opacity = '1';
+                        job.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    job.style.opacity = '0';
+                    job.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        job.style.display = 'none';
+                    }, 300);
+                }
+            });
+            
+            showNotification('تم تطبيق الفلاتر بنجاح', 'success');
+        }
+
+        // تغيير طريقة العرض
+        function changeView(viewType) {
+            const viewBtns = document.querySelectorAll('.view-btn');
+            viewBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (viewType === 'compact') {
+                document.querySelectorAll('.job-card').forEach(card => {
+                    card.style.padding = '15px';
+                });
+            } else {
+                document.querySelectorAll('.job-card').forEach(card => {
+                    card.style.padding = '';
+                });
+            }
+        }
+
+        // تبديل حفظ الوظيفة
+        function toggleSaveJob(jobId, event) {
+            if (event) event.stopPropagation();
+            
+            const saveBtn = event.target.closest('.job-save');
+            const isSaved = saveBtn.classList.contains('saved');
+            const jobTitle = document.querySelectorAll('.job-card')[jobId - 1].querySelector('h3').textContent;
+            
+            if (isSaved) {
+                saveBtn.classList.remove('saved');
+                saveBtn.innerHTML = '<i class="far fa-bookmark"></i>';
+                showNotification(`تم إزالة "${jobTitle}" من المحفوظات`, 'info');
+            } else {
+                saveBtn.classList.add('saved');
+                saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+                showNotification(`تم حفظ "${jobTitle}" في المحفوظات`, 'success');
+            }
+        }
+
+        // عرض تفاصيل الوظيفة
+        function viewJobDetails(jobId, event) {
+            if (event) event.stopPropagation();
+            window.location.href = `job-details.html?id=${jobId}`;
+        }
+
+        // مشاركة الوظيفة
+        function shareJob(jobId, event) {
+            if (event) event.stopPropagation();
+            const jobTitle = document.querySelectorAll('.job-card')[jobId - 1].querySelector('h3').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: jobTitle,
+                    text: 'تفضل بمراجعة هذه الوظيفة المناسبة',
+                    url: window.location.href,
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('تم نسخ رابط الوظيفة', 'success');
+                });
+            }
+        }
+
+        // التقديم على وظيفة
+        function applyToJob(jobId, event) {
+            if (event) event.stopPropagation();
+            
+            const jobCard = event.target.closest('.job-card');
+            const jobTitle = jobCard.querySelector('h3').textContent;
+            const clientName = jobCard.querySelector('.client-info h4').textContent;
+            const jobBudget = jobCard.querySelector('.job-budget').textContent;
+            
+            // عرض نافذة التقديم
+            document.getElementById('applyModal').classList.add('active');
+            
+            // تحميل محتوى التقديم
+            document.getElementById('applyJobContent').innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 10px;">${jobTitle}</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">
+                        <i class="fas fa-user"></i> العميل: ${clientName}<br>
+                        <i class="fas fa-money-bill-wave"></i> الميزانية: ${jobBudget}
+                    </p>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--text-primary); font-weight: 600;">السعر المقترح (ريال)</label>
+                    <input type="number" id="proposedPrice" class="pricing-input" value="${jobBudget.replace(/[^\d]/g, '')}" style="width: 100%;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--text-primary); font-weight: 600;">المدة المقترحة</label>
+                    <select id="proposedDuration" class="pricing-input" style="width: 100%;">
+                        <option value="3">3 أيام</option>
+                        <option value="5">5 أيام</option>
+                        <option value="7">7 أيام</option>
+                        <option value="10">10 أيام</option>
+                        <option value="14">14 يوم</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--text-primary); font-weight: 600;">رسالة التقديم</label>
+                    <textarea id="proposalMessage" class="pricing-input" rows="4" placeholder="أكتب رسالتك للعميل هنا..." style="width: 100%; resize: vertical;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--text-primary); font-weight: 600;">إرفاق ملفات (اختياري)</label>
+                    <input type="file" id="proposalFiles" multiple style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;">
+                </div>
+                
+                <button class="apply-btn" onclick="submitProposal(${jobId})" style="width: 100%; padding: 15px; font-size: 16px;">
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال العرض
+                </button>
+            `;
+        }
+
+        // إغلاق نافذة التقديم
+        function closeApplyModal() {
+            document.getElementById('applyModal').classList.remove('active');
+        }
+
+        // إرسال العرض
+        function submitProposal(jobId) {
+            const price = document.getElementById('proposedPrice').value;
+            const message = document.getElementById('proposalMessage').value;
+            
+            if (!price || !message) {
+                showNotification('يرجى تعبئة جميع الحقول المطلوبة', 'warning');
+                return;
+            }
+            
+            showNotification('جاري إرسال عرضك...', 'info');
+            
+            setTimeout(() => {
+                showNotification('تم إرسال عرضك بنجاح! سيتم التواصل معك قريباً.', 'success');
+                closeApplyModal();
+                
+                // تعطيل زر التقديم للوظيفة
+                const applyBtn = document.querySelectorAll('.job-card')[jobId - 1].querySelector('.apply-btn');
+                applyBtn.innerHTML = '<i class="fas fa-check"></i> تم التقديم';
+                applyBtn.disabled = true;
+                applyBtn.style.background = 'var(--success-color)';
+            }, 2000);
+        }
+
+        // حساب السعر المقترح
+        function calculatePrice() {
+            const projectType = document.getElementById('projectType').value;
+            const complexity = document.getElementById('complexity').value;
+            const experience = document.getElementById('experience').value;
+            const timeline = document.getElementById('timeline').value;
+            
+            if (!projectType || !complexity || !experience || !timeline) {
+                showNotification('يرجى تعبئة جميع الحقول', 'warning');
+                return;
+            }
+            
+            // قاعدة حساب الأسعار
+            const basePrices = {
+                'logo': 500,
+                'branding': 1500,
+                'web': 2000,
+                'ui-ux': 2500,
+                'print': 800,
+                'video': 1200
+            };
+            
+            const complexityMultiplier = {
+                'simple': 1,
+                'medium': 1.5,
+                'complex': 2,
+                'very-complex': 3
+            };
+            
+            const experienceMultiplier = {
+                'beginner': 0.7,
+                'intermediate': 1,
+                'expert': 1.5,
+                'premium': 2
+            };
+            
+            const timelineMultiplier = {
+                'urgent': 1.5,
+                'normal': 1,
+                'flexible': 0.9
+            };
+            
+            const basePrice = basePrices[projectType] || 1000;
+            let finalPrice = basePrice * 
+                           complexityMultiplier[complexity] * 
+                           experienceMultiplier[experience] * 
+                           timelineMultiplier[timeline];
+            
+            // تقريب لأقرب 50 ريال
+            finalPrice = Math.round(finalPrice / 50) * 50;
+            
+            document.getElementById('priceResult').textContent = `${finalPrice} ريال`;
+            
+            // إظهار تحليل السعر
+            showNotification(`سعر المقترح: ${finalPrice} ريال\n\nتحليل السعر:\n• السعر الأساسي: ${basePrice} ريال\n• التعقيد: ${complexityMultiplier[complexity]}x\n• الخبرة: ${experienceMultiplier[experience]}x\n• المدة: ${timelineMultiplier[timeline]}x`, 'info');
+        }
+
+        // تحميل المزيد من الوظائف
+        function loadMoreJobs() {
+            const loadBtn = document.querySelector('.load-btn');
+            loadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+            loadBtn.disabled = true;
+            
+            setTimeout(() => {
+                // محاكاة تحميل وظائف جديدة
+                showNotification('تم تحميل 6 وظائف جديدة', 'success');
+                loadBtn.innerHTML = '<i class="fas fa-sync-alt"></i> تحميل المزيد من الوظائف';
+                loadBtn.disabled = false;
+            }, 2000);
+        }
+
+        // إظهار الإشعارات
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                      type === 'warning' ? 'exclamation-triangle' : 
+                                      'info-circle'}"></i>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : 
+                            type === 'warning' ? 'var(--warning-color)' : 
+                            'var(--primary-color)'};
+                color: white;
+                padding: 15px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                z-index: 9999;
+                box-shadow: var(--shadow-lg);
+                animation: slideIn 0.3s ease-out;
+                white-space: pre-line;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // إضافة أنماط للتحريك
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateY(-20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateY(0); opacity: 1; }
+                to { transform: translateY(-20px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html></script>
+</body>
+</html>

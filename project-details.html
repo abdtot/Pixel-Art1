@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تفاصيل المشروع | بيكسل آرت</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a9396;
+            --primary-dark: #005f73;
+            --primary-light: #94d2bd;
+            --primary-gradient: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            --secondary-color: #ee9b00;
+            --secondary-dark: #ca6702;
+            --secondary-light: #ffb347;
+            --success-color: #2a9d8f;
+            --warning-color: #e9c46a;
+            --danger-color: #e76f51;
+            --bg-primary: rgba(255, 255, 255, 0.95);
+            --bg-secondary: rgba(248, 250, 252, 0.9);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.25);
+            --transition-fast: 200ms;
+            --transition-medium: 300ms;
+            --transition-slow: 500ms;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                url('./background/designer-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* شريط الحالة */
+        .status-bar {
+            height: 28px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* الهيدر */
+        .app-header {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .back-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title h1 {
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title span {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-action {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .header-action:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* بطاقة المشروع الرئيسية */
+        .project-hero {
+            background: linear-gradient(135deg, rgba(10, 147, 150, 0.9), rgba(238, 155, 0, 0.9));
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(20px);
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .project-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .project-title h2 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .project-client {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .project-status {
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .status-active {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .status-pending {
+            background: rgba(233, 196, 106, 0.3);
+            color: white;
+        }
+
+        .status-completed {
+            background: rgba(42, 157, 143, 0.3);
+            color: white;
+        }
+
+        .project-stats {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        /* تخطيط المحتوى */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* القسم الرئيسي */
+        .main-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* القسم الجانبي */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* البطاقات العامة */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-action {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all var(--transition-fast);
+        }
+
+        .card-action:hover {
+            color: var(--secondary-color);
+        }
+
+        /* تفاصيل المشروع */
+        .project-description {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .meta-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .meta-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* مراحل المشروع */
+        .timeline {
+            position: relative;
+            padding-right: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            right: -30px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-marker.completed {
+            background: var(--success-color);
+        }
+
+        .timeline-marker.in-progress {
+            background: var(--primary-color);
+        }
+
+        .timeline-marker.pending {
+            background: var(--warning-color);
+        }
+
+        .timeline-marker.not-started {
+            background: var(--border-color);
+        }
+
+        .timeline-content h4 {
+            font-size: 15px;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .timeline-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* الملفات المرفوعة */
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .file-item {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: 1px solid var(--border-color);
+        }
+
+        .file-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin: 0 auto 10px;
+        }
+
+        .file-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .file-size {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        /* المحادثات */
+        .chat-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message.received {
+            flex-direction: row;
+        }
+
+        .message.sent {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            max-width: 70%;
+        }
+
+        .message-bubble {
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+        }
+
+        .received .message-bubble {
+            background: var(--bg-secondary);
+            border-top-right-radius: 4px;
+        }
+
+        .sent .message-bubble {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-top-left-radius: 4px;
+        }
+
+        .message-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .sent .message-time {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: right;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Cairo';
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .send-btn {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* المعلومات المالية */
+        .financial-info {
+            text-align: center;
+        }
+
+        .financial-amount {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .financial-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .status-paid {
+            background: rgba(42, 157, 143, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background: rgba(233, 196, 106, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-partial {
+            background: rgba(238, 155, 0, 0.15);
+            color: var(--secondary-color);
+        }
+
+        /* أزرار الإجراءات */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all var(--transition-fast);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .action-btn.danger {
+            background: rgba(231, 111, 81, 0.1);
+            color: var(--danger-color);
+            border: 1px solid rgba(231, 111, 81, 0.2);
+        }
+
+        .action-btn.danger:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        /* أعضاء الفريق */
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .member-item:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .member-item:hover .member-name,
+        .member-item:hover .member-role {
+            color: white;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .member-role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .member-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .status-online {
+            background: var(--success-color);
+            box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.2);
+        }
+
+        .status-offline {
+            background: var(--text-secondary);
+            box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2);
+        }
+
+        /* التواريخ الهامة */
+        .important-dates {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .date-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+
+        .date-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--warning-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .date-info {
+            flex: 1;
+        }
+
+        .date-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+        }
+
+        .date-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .date-status {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .status-upcoming {
+            background: rgba(10, 147, 150, 0.1);
+            color: var(--primary-color);
+        }
+
+        .status-past {
+            background: rgba(231, 111, 81, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* المراجعات والتقييمات */
+        .review-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            margin-top: 30px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .reviewer-details h4 {
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating-stars {
+            color: var(--warning-color);
+            font-size: 18px;
+        }
+
+        .rating-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-right: 5px;
+        }
+
+        .review-content {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            border-top: 1px solid var(--glass-border);
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+            background: rgba(10, 147, 150, 0.1);
+        }
+
+        .nav-item.active {
+            color: var(--secondary-color);
+            background: rgba(238, 155, 0, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 22px;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 992px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .project-hero {
+                padding: 20px;
+            }
+            
+            .project-title h2 {
+                font-size: 20px;
+            }
+            
+            .project-stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .financial-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+            
+            .nav-item i {
+                font-size: 20px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* تأثيرات */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* نافذة تحميل الملف */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-medium);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(20px);
+            transition: transform var(--transition-medium);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط الحالة -->
+    <div class="status-bar">
+        <div class="status-time">
+            <i class="far fa-clock"></i>
+            <span id="currentTime">--:--</span>
+        </div>
+        <div class="status-icons">
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header class="app-header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="page-title">
+                <h1>تفاصيل المشروع</h1>
+                <span>تصميم شعار متكامل لمطعم</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="header-action" onclick="toggleFavorite()">
+                <i class="far fa-star"></i>
+            </div>
+            <div class="header-action" onclick="shareProject()">
+                <i class="fas fa-share-alt"></i>
+            </div>
+            <div class="header-action" onclick="printProject()">
+                <i class="fas fa-print"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- بطاقة المشروع الرئيسية -->
+        <section class="project-hero animate-fadeIn">
+            <div class="project-header">
+                <div class="project-title">
+                    <h2>تصميم شعار متكامل لمطعم</h2>
+                    <div class="project-client">
+                        <div class="client-avatar">أ</div>
+                        <div>
+                            <div>العميل: أحمد التميمي</div>
+                            <div style="font-size: 13px;">ahmed@example.com | +966 50 123 4567</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="project-status status-active">قيد التنفيذ</span>
+            </div>
+            
+            <div class="project-stats">
+                <div class="stat-item">
+                    <div class="stat-label">التقدم</div>
+                    <div class="stat-value">65%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">الأيام المتبقية</div>
+                    <div class="stat-value">5</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">السعر الإجمالي</div>
+                    <div class="stat-value">1,200 ريال</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">الوقت المنقضي</div>
+                    <div class="stat-value">15 يوم</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- تخطيط المحتوى -->
+        <div class="content-layout">
+            <!-- القسم الرئيسي -->
+            <div class="main-section">
+                <!-- تفاصيل المشروع -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-info-circle"></i>
+                            تفاصيل المشروع
+                        </h3>
+                        <button class="card-action" onclick="editProjectDetails()">
+                            <i class="fas fa-edit"></i>
+                            تعديل
+                        </button>
+                    </div>
+                    <p class="project-description">
+                        تصميم شعار وهوية بصرية متكاملة لمطعم حديث متخصص في المأكولات الشعبية السعودية بأسلوب عصري وجذاب. 
+                        يتضمن المشروع تصميم شعار رئيسي، ألوان الهوية، خطوط معتمدة، وتطبيقات على مختلف الوسائط 
+                        (بطاقات العمل، القوائم، اللوحات الإعلانية، الوسائط الرقمية).
+                    </p>
+                    
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">تاريخ البدء</span>
+                            <span class="meta-value">1 فبراير 2024</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">الموعد النهائي</span>
+                            <span class="meta-value">15 مارس 2024</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">فئة المشروع</span>
+                            <span class="meta-value">تصميم الهوية البصرية</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">مستوى الأولوية</span>
+                            <span class="meta-value">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مراحل المشروع -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-tasks"></i>
+                            مراحل المشروع
+                        </h3>
+                        <button class="card-action" onclick="updateTimeline()">
+                            <i class="fas fa-plus"></i>
+                            إضافة مرحلة
+                        </button>
+                    </div>
+                    <div class="timeline">
+                        <!-- مرحلة 1 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker completed"></div>
+                            <div class="timeline-content">
+                                <h4>الاكتشاف والبحث</h4>
+                                <p>جمع المعلومات والبحث عن السوق المستهدف وتحليل المنافسين</p>
+                                <div class="timeline-date">
+                                    <i class="far fa-calendar"></i>
+                                    1 - 5 فبراير 2024
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- مرحلة 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker completed"></div>
+                            <div class="timeline-content">
+                                <h4>التصميم الأولي</h4>
+                                <p>إنشاء 3 مقترحات أولية للشعار واختيار أفضل اتجاه تصميمي</p>
+                                <div class="timeline-date">
+                                    <i class="far fa-calendar"></i>
+                                    6 - 10 فبراير 2024
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- مرحلة 3 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker in-progress"></div>
+                            <div class="timeline-content">
+                                <h4>التطوير والتحسين</h4>
+                                <p>تطوير الشعار المختصر وبناء النظام البصري الكامل</p>
+                                <div class="timeline-date">
+                                    <i class="far fa-calendar"></i>
+                                    11 فبراير - 5 مارس 2024
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- مرحلة 4 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker pending"></div>
+                            <div class="timeline-content">
+                                <h4>التطبيقات العملية</h4>
+                                <p>تطبيق الهوية على الوسائط المختلفة وإنشاء دليل الاستخدام</p>
+                                <div class="timeline-date">
+                                    <i class="far fa-calendar"></i>
+                                    6 - 12 مارس 2024
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- مرحلة 5 -->
+                        <div class="timeline-item">
+                            <div class="timeline-marker not-started"></div>
+                            <div class="timeline-content">
+                                <h4>التسليم والتدريب</h4>
+                                <p>تسليم الملفات النهائية وتدريب العميل على استخدام الهوية</p>
+                                <div class="timeline-date">
+                                    <i class="far fa-calendar"></i>
+                                    13 - 15 مارس 2024
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الملفات المرفوعة -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-paperclip"></i>
+                            الملفات المرفوعة
+                        </h3>
+                        <button class="card-action" onclick="uploadFile()">
+                            <i class="fas fa-upload"></i>
+                            رفع ملف
+                        </button>
+                    </div>
+                    <div class="files-grid">
+                        <div class="file-item" onclick="previewFile('logo-concepts')">
+                            <div class="file-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="file-name">مقترحات الشعار.pdf</div>
+                            <div class="file-size">2.4 MB</div>
+                        </div>
+                        
+                        <div class="file-item" onclick="previewFile('brand-guidelines')">
+                            <div class="file-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="file-name">دليل الهوية.pdf</div>
+                            <div class="file-size">5.1 MB</div>
+                        </div>
+                        
+                        <div class="file-item" onclick="previewFile('color-palette')">
+                            <div class="file-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="file-name">نظام الألوان.ai</div>
+                            <div class="file-size">3.2 MB</div>
+                        </div>
+                        
+                        <div class="file-item" onclick="previewFile('typography')">
+                            <div class="file-icon">
+                                <i class="fas fa-font"></i>
+                            </div>
+                            <div class="file-name">الخطوط المعتمدة.ttf</div>
+                            <div class="file-size">1.8 MB</div>
+                        </div>
+                        
+                        <div class="file-item" onclick="previewFile('applications')">
+                            <div class="file-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="file-name">تطبيقات الهوية.zip</div>
+                            <div class="file-size">15.7 MB</div>
+                        </div>
+                        
+                        <div class="file-item" onclick="previewFile('contract')">
+                            <div class="file-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="file-name">العقد المتفق عليه.pdf</div>
+                            <div class="file-size">850 KB</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- المحادثات -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-comments"></i>
+                            المحادثات
+                        </h3>
+                        <button class="card-action" onclick="startVideoCall()">
+                            <i class="fas fa-video"></i>
+                            مكالمة فيديو
+                        </button>
+                    </div>
+                    <div class="chat-container">
+                        <!-- رسالة من العميل -->
+                        <div class="message received">
+                            <div class="message-avatar">أ</div>
+                            <div class="message-content">
+                                <div class="message-bubble">
+                                    <p class="message-text">مرحباً، هل لديك أي تحديثات بخصوص المقترحات الأولية؟</p>
+                                </div>
+                                <div class="message-time">10:30 ص</div>
+                            </div>
+                        </div>
+                        
+                        <!-- رسالة مني -->
+                        <div class="message sent">
+                            <div class="message-avatar">م</div>
+                            <div class="message-content">
+                                <div class="message-bubble">
+                                    <p class="message-text">نعم، لقد أنشأت 3 مقترحات مختلفة. يمكنك مشاهدتها في الملفات المرفوعة.</p>
+                                </div>
+                                <div class="message-time">10:45 ص</div>
+                            </div>
+                        </div>
+                        
+                        <!-- رسالة من العميل -->
+                        <div class="message received">
+                            <div class="message-avatar">أ</div>
+                            <div class="message-content">
+                                <div class="message-bubble">
+                                    <p class="message-text">رائع! أنا أحب المقترح الثاني. هل يمكننا العمل على تطويره أكثر؟</p>
+                                </div>
+                                <div class="message-time">11:15 ص</div>
+                            </div>
+                        </div>
+                        
+                        <!-- رسالة مني -->
+                        <div class="message sent">
+                            <div class="message-avatar">م</div>
+                            <div class="message-content">
+                                <div class="message-bubble">
+                                    <p class="message-text">بالطبع، سأبدأ في تطوير المقترح الثاني وإرسال التحديثات غداً.</p>
+                                </div>
+                                <div class="message-time">11:30 ص</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="اكتب رسالتك هنا..." id="chatMessage">
+                        <button class="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القسم الجانبي -->
+            <div class="sidebar">
+                <!-- المعلومات المالية -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-money-bill-wave"></i>
+                            المعلومات المالية
+                        </h3>
+                        <button class="card-action" onclick="requestPayment()">
+                            <i class="fas fa-hand-holding-usd"></i>
+                            طلب دفعة
+                        </button>
+                    </div>
+                    <div class="financial-info">
+                        <div class="financial-amount">1,200 ريال</div>
+                        <span class="payment-status status-partial">دفعة أولى 50%</span>
+                        
+                        <div class="financial-details">
+                            <div class="detail-item">
+                                <div class="detail-label">المدفوع</div>
+                                <div class="detail-value">600 ريال</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">المتبقي</div>
+                                <div class="detail-value">600 ريال</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">الدفعة الأولى</div>
+                                <div class="detail-value">1 فبراير</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">الدفعة الأخيرة</div>
+                                <div class="detail-value">15 مارس</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أزرار الإجراءات -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-bolt"></i>
+                            الإجراءات السريعة
+                        </h3>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="updateProgress()">
+                            <i class="fas fa-chart-line"></i>
+                            تحديث التقدم
+                        </button>
+                        <button class="action-btn secondary" onclick="sendUpdate()">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال تحديث للعميل
+                        </button>
+                        <button class="action-btn secondary" onclick="scheduleMeeting()">
+                            <i class="fas fa-calendar-alt"></i>
+                            جدولة اجتماع
+                        </button>
+                        <button class="action-btn danger" onclick="cancelProject()">
+                            <i class="fas fa-times-circle"></i>
+                            إلغاء المشروع
+                        </button>
+                    </div>
+                </div>
+
+                <!-- أعضاء الفريق -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-users"></i>
+                            أعضاء الفريق
+                        </h3>
+                        <button class="card-action" onclick="addTeamMember()">
+                            <i class="fas fa-user-plus"></i>
+                            إضافة
+                        </button>
+                    </div>
+                    <div class="team-members">
+                        <div class="member-item">
+                            <div class="member-avatar">م</div>
+                            <div class="member-info">
+                                <div class="member-name">محمد المصمم</div>
+                                <div class="member-role">المصمم الرئيسي</div>
+                            </div>
+                            <div class="member-status status-online"></div>
+                        </div>
+                        
+                        <div class="member-item">
+                            <div class="member-avatar">س</div>
+                            <div class="member-info">
+                                <div class="member-name">سارة المترجمة</div>
+                                <div class="member-role">مدققة المحتوى</div>
+                            </div>
+                            <div class="member-status status-offline"></div>
+                        </div>
+                        
+                        <div class="member-item">
+                            <div class="member-avatar">أ</div>
+                            <div class="member-info">
+                                <div class="member-name">أحمد العميل</div>
+                                <div class="member-role">صاحب المشروع</div>
+                            </div>
+                            <div class="member-status status-online"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- التواريخ الهامة -->
+                <div class="card animate-fadeIn">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-calendar-star"></i>
+                            التواريخ الهامة
+                        </h3>
+                    </div>
+                    <div class="important-dates">
+                        <div class="date-item">
+                            <div class="date-icon">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <div class="date-info">
+                                <div class="date-label">بداية المشروع</div>
+                                <div class="date-value">1 فبراير 2024</div>
+                            </div>
+                            <span class="date-status status-past">منتهي</span>
+                        </div>
+                        
+                        <div class="date-item">
+                            <div class="date-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="date-info">
+                                <div class="date-label">تسليم المقترحات</div>
+                                <div class="date-value">10 فبراير 2024</div>
+                            </div>
+                            <span class="date-status status-past">مكتمل</span>
+                        </div>
+                        
+                        <div class="date-item">
+                            <div class="date-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="date-info">
+                                <div class="date-label">مراجعة منتصف المشروع</div>
+                                <div class="date-value">25 فبراير 2024</div>
+                            </div>
+                            <span class="date-status status-upcoming">قادم</span>
+                        </div>
+                        
+                        <div class="date-item">
+                            <div class="date-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="date-info">
+                                <div class="date-label">التسليم النهائي</div>
+                                <div class="date-value">15 مارس 2024</div>
+                            </div>
+                            <span class="date-status status-upcoming">قادم</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المراجعات والتقييمات -->
+        <div class="review-card animate-fadeIn">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">أ</div>
+                    <div class="reviewer-details">
+                        <h4>أحمد التميمي</h4>
+                        <div class="review-date">مشروع سابق - يناير 2024</div>
+                    </div>
+                </div>
+                <div class="review-rating">
+                    <span class="rating-value">4.8</span>
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="review-content">
+                "محمد مصمم مبدع ومحترف. تعامل مع مشروعنا السابق بجدية والتزام. التصاميم كانت مبتكرة وتجاوزت توقعاتنا. 
+                التواصل كان ممتازاً وكان دائمًا متاحاً للاستفسارات والتعديلات. ننصح بالتعامل معه بشدة."
+            </div>
+        </div>
+    </main>
+
+    <!-- نافذة تحميل الملف -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-content">
+            <div class="card-header">
+                <h3>
+                    <i class="fas fa-upload"></i>
+                    رفع ملف جديد
+                </h3>
+                <button class="card-action" onclick="closeUploadModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="margin-top: 20px;">
+                <div style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer;" onclick="document.getElementById('fileInput').click()">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--text-secondary); margin-bottom: 15px;"></i>
+                    <div style="color: var(--text-secondary); margin-bottom: 10px;">اسحب الملفات هنا أو انقر للتصفح</div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">الحد الأقصى للملف: 50MB</div>
+                </div>
+                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(this.files)">
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav">
+        <a href="dashboard-designer.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        
+        <a href="my-projects.html" class="nav-item">
+            <i class="fas fa-project-diagram"></i>
+            <span>مشاريعي</span>
+        </a>
+        
+        <a href="services.html" class="nav-item">
+            <i class="fas fa-cogs"></i>
+            <span>الخدمات</span>
+        </a>
+        
+        <a href="jobs.html" class="nav-item">
+            <i class="fas fa-briefcase"></i>
+            <span>الوظائف</span>
+        </a>
+        
+        <a href="messages.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>الرسائل</span>
+        </a>
+    </nav>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            loadProjectData();
+            setupEventListeners();
+        });
+
+        // تحديث الوقت
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // تحميل بيانات المشروع
+        function loadProjectData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectId = urlParams.get('id') || '1';
+            
+            // في التطبيق الحقيقي: جلب بيانات المشروع من API حسب الـ ID
+            console.log(`تحميل بيانات المشروع ${projectId}...`);
+            
+            // تحديث عنوان الصفحة
+            document.querySelector('.page-title span').textContent = 'جاري تحميل المشروع...';
+        }
+
+        // إعداد المستمعين للأحداث
+        function setupEventListeners() {
+            // إرسال رسالة عند الضغط على Enter
+            document.getElementById('chatMessage').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        // العودة للصفحة السابقة
+        function goBack() {
+            window.history.back();
+        }
+
+        // تبديل المفضلة
+        function toggleFavorite() {
+            const icon = document.querySelector('.header-action:nth-child(1) i');
+            const isFavorite = icon.classList.contains('fas');
+            
+            if (isFavorite) {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                showNotification('تم إزالة المشروع من المفضلة', 'info');
+            } else {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = 'var(--secondary-color)';
+                showNotification('تم إضافة المشروع للمفضلة', 'success');
+            }
+        }
+
+        // مشاركة المشروع
+        function shareProject() {
+            const projectTitle = 'تصميم شعار متكامل لمطعم';
+            const projectUrl = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: projectTitle,
+                    text: 'تفضل بمشاهدة مشروعي الجديد',
+                    url: projectUrl,
+                });
+            } else {
+                navigator.clipboard.writeText(projectUrl).then(() => {
+                    showNotification('تم نسخ رابط المشروع', 'success');
+                });
+            }
+        }
+
+        // طباعة تفاصيل المشروع
+        function printProject() {
+            showNotification('جاري تحضير المشروع للطباعة...', 'info');
+            setTimeout(() => {
+                window.print();
+            }, 1000);
+        }
+
+        // تحرير تفاصيل المشروع
+        function editProjectDetails() {
+            showNotification('جاري فتح تحرير تفاصيل المشروع...', 'info');
+            // في التطبيق الحقيقي: فتح نموذج التحرير
+        }
+
+        // تحديث الجدول الزمني
+        function updateTimeline() {
+            const newStage = prompt('أدخل اسم المرحلة الجديدة:');
+            if (newStage) {
+                showNotification(`تم إضافة مرحلة "${newStage}"`, 'success');
+            }
+        }
+
+        // رفع ملف
+        function uploadFile() {
+            document.getElementById('uploadModal').classList.add('active');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+        }
+
+        function handleFileUpload(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                showNotification(`جاري رفع ${file.name}...`, 'info');
+                closeUploadModal();
+                
+                setTimeout(() => {
+                    showNotification(`تم رفع ${file.name} بنجاح`, 'success');
+                }, 1500);
+            }
+        }
+
+        // معاينة ملف
+        function previewFile(fileType) {
+            const fileNames = {
+                'logo-concepts': 'مقترحات الشعار.pdf',
+                'brand-guidelines': 'دليل الهوية.pdf',
+                'color-palette': 'نظام الألوان.ai',
+                'typography': 'الخطوط المعتمدة.ttf',
+                'applications': 'تطبيقات الهوية.zip',
+                'contract': 'العقد المتفق عليه.pdf'
+            };
+            
+            showNotification(`جاري فتح ${fileNames[fileType]}...`, 'info');
+            // في التطبيق الحقيقي: فتح المعاينة أو التحميل
+        }
+
+        // بدء مكالمة فيديو
+        function startVideoCall() {
+            showNotification('جاري بدء مكالمة الفيديو...', 'info');
+            // في التطبيق الحقيقي: بدء مكالمة الفيديو
+        }
+
+        // إرسال رسالة
+        function sendMessage() {
+            const messageInput = document.getElementById('chatMessage');
+            const message = messageInput.value.trim();
+            
+            if (message) {
+                const chatContainer = document.querySelector('.chat-container');
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ar-SA', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const messageHTML = `
+                    <div class="message sent">
+                        <div class="message-avatar">م</div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <p class="message-text">${message}</p>
+                            </div>
+                            <div class="message-time">${timeString}</div>
+                        </div>
+                    </div>
+                `;
+                
+                chatContainer.insertAdjacentHTML('beforeend', messageHTML);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                messageInput.value = '';
+                
+                // محاكاة رد العميل بعد 2 ثانية
+                setTimeout(() => {
+                    const responses = [
+                        'شكراً على التوضيح',
+                        'فكرة رائعة',
+                        'متى تتوقع الانتهاء؟',
+                        'هذا ما كنت أبحث عنه'
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    
+                    const responseHTML = `
+                        <div class="message received">
+                            <div class="message-avatar">أ</div>
+                            <div class="message-content">
+                                <div class="message-bubble">
+                                    <p class="message-text">${randomResponse}</p>
+                                </div>
+                                <div class="message-time">${timeString}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    chatContainer.insertAdjacentHTML('beforeend', responseHTML);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 2000);
+            }
+        }
+
+        // طلب دفعة
+        function requestPayment() {
+            if (confirm('هل تريد إرسال طلب دفعة للعميل؟')) {
+                showNotification('جاري إرسال طلب الدفعة...', 'info');
+                setTimeout(() => {
+                    showNotification('تم إرسال طلب الدفعة بنجاح', 'success');
+                }, 1500);
+            }
+        }
+
+        // تحديث التقدم
+        function updateProgress() {
+            const newProgress = prompt('أدخل النسبة المئوية الجديدة للتقدم (0-100):');
+            if (newProgress && !isNaN(newProgress) && newProgress >= 0 && newProgress <= 100) {
+                document.querySelector('.stat-item:nth-child(1) .stat-value').textContent = `${newProgress}%`;
+                document.querySelector('.progress-fill').style.width = `${newProgress}%`;
+                showNotification(`تم تحديث التقدم إلى ${newProgress}%`, 'success');
+            }
+        }
+
+        // إرسال تحديث للعميل
+        function sendUpdate() {
+            const update = prompt('أدخل التحديث الذي تريد إرساله للعميل:');
+            if (update) {
+                showNotification('جاري إرسال التحديث للعميل...', 'info');
+                setTimeout(() => {
+                    showNotification('تم إرسال التحديث بنجاح', 'success');
+                }, 1500);
+            }
+        }
+
+        // جدولة اجتماع
+        function scheduleMeeting() {
+            const date = prompt('أدخل تاريخ الاجتماع (مثال: 2024-03-10 14:00):');
+            if (date) {
+                showNotification('جاري جدولة الاجتماع...', 'info');
+                setTimeout(() => {
+                    showNotification(`تم جدولة الاجتماع في ${date}`, 'success');
+                }, 1500);
+            }
+        }
+
+        // إلغاء المشروع
+        function cancelProject() {
+            if (confirm('هل أنت متأكد من إلغاء المشروع؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                showNotification('جاري إلغاء المشروع...', 'warning');
+                setTimeout(() => {
+                    showNotification('تم إلغاء المشروع بنجاح', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'my-projects.html';
+                    }, 1000);
+                }, 2000);
+            }
+        }
+
+        // إضافة عضو للفريق
+        function addTeamMember() {
+            const memberName = prompt('أدخل اسم العضو الجديد:');
+            if (memberName) {
+                showNotification(`جاري إضافة ${memberName} للفريق...`, 'info');
+                setTimeout(() => {
+                    showNotification(`تم إضافة ${memberName} للفريق بنجاح`, 'success');
+                }, 1500);
+            }
+        }
+
+        // إظهار الإشعارات
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                      type === 'warning' ? 'exclamation-triangle' : 
+                                      'info-circle'}"></i>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : 
+                            type === 'warning' ? 'var(--warning-color)' : 
+                            'var(--primary-color)'};
+                color: white;
+                padding: 15px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                z-index: 9999;
+                box-shadow: var(--shadow-lg);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // إضافة أنماط للتحريك
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateY(-20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateY(0); opacity: 1; }
+                to { transform: translateY(-20px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

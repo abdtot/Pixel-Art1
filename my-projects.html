@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مشاريعي | بيكسل آرت</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a9396;
+            --primary-dark: #005f73;
+            --primary-light: #94d2bd;
+            --primary-gradient: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            --secondary-color: #ee9b00;
+            --secondary-dark: #ca6702;
+            --secondary-light: #ffb347;
+            --success-color: #2a9d8f;
+            --warning-color: #e9c46a;
+            --danger-color: #e76f51;
+            --bg-primary: rgba(255, 255, 255, 0.95);
+            --bg-secondary: rgba(248, 250, 252, 0.9);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.25);
+            --transition-fast: 200ms;
+            --transition-medium: 300ms;
+            --transition-slow: 500ms;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                url('./background/designer-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* شريط الحالة */
+        .status-bar {
+            height: 28px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* الهيدر المتقدم */
+        .app-header {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .back-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title span {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-action {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .header-action:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* فلتر المشاريع */
+        .filter-section {
+            padding: 20px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 70px;
+            z-index: 900;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-tab {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-tab:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-tab .count {
+            background: white;
+            color: var(--primary-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-select {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Cairo';
+        }
+
+        .search-box {
+            flex: 2;
+            padding: 10px 45px 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .add-project-btn {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .add-project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* إحصائيات المشاريع */
+        .projects-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all var(--transition-medium);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .stat-icon.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .stat-icon.pending {
+            background: linear-gradient(135deg, var(--warning-color), #d4a017);
+        }
+
+        .stat-icon.completed {
+            background: linear-gradient(135deg, var(--success-color), #1d7873);
+        }
+
+        .stat-icon.archived {
+            background: linear-gradient(135deg, var(--text-secondary), #64748b);
+        }
+
+        .stat-info h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .stat-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 5px 0 0 0;
+        }
+
+        /* عرض المشاريع */
+        .projects-view {
+            margin-bottom: 40px;
+        }
+
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .view-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* بطاقة المشروع (نمط الشبكة) */
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--secondary-color);
+        }
+
+        .project-image {
+            height: 180px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--transition-medium);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .overlay-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .overlay-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .overlay-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .project-title h3 {
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .project-client {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-status {
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: rgba(10, 147, 150, 0.15);
+            color: var(--primary-color);
+        }
+
+        .status-pending {
+            background: rgba(233, 196, 106, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-completed {
+            background: rgba(42, 157, 143, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-delayed {
+            background: rgba(231, 111, 81, 0.15);
+            color: var(--danger-color);
+        }
+
+        .project-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .project-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .project-progress {
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width var(--transition-slow);
+        }
+
+        .progress-active .progress-fill {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .progress-pending .progress-fill {
+            background: var(--warning-color);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* عنصر المشروع (نمط القائمة) */
+        .project-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+            cursor: pointer;
+        }
+
+        .project-item:hover {
+            transform: translateX(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-title h3 {
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .item-client {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .item-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .meta-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .item-action {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .item-action:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* مشاريع مقترحة */
+        .suggested-projects {
+            margin-bottom: 40px;
+        }
+
+        .suggested-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .suggested-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+        }
+
+        .suggested-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--border-color);
+        }
+
+        .suggested-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .suggested-slider::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .suggested-slider::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .suggested-card {
+            min-width: 280px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+        }
+
+        .suggested-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .suggested-badge {
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .suggested-title h4 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .suggested-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .suggested-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suggested-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .apply-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* تحميل المزيد */
+        .load-more {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .load-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 40px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+        }
+
+        .load-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            border-top: 1px solid var(--glass-border);
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+            background: rgba(10, 147, 150, 0.1);
+        }
+
+        .nav-item.active {
+            color: var(--secondary-color);
+            background: rgba(238, 155, 0, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 22px;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .page-title h1 {
+                font-size: 18px;
+            }
+            
+            .filter-section {
+                padding: 15px;
+            }
+            
+            .filter-tabs {
+                gap: 8px;
+            }
+            
+            .filter-tab {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-item {
+                flex-direction: column;
+            }
+            
+            .item-image {
+                width: 100%;
+                height: 150px;
+            }
+            
+            .suggested-card {
+                min-width: 250px;
+            }
+            
+            .projects-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-actions {
+                flex-direction: column;
+            }
+            
+            .search-box,
+            .filter-select {
+                width: 100%;
+            }
+            
+            .view-toggle {
+                width: 100%;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+            
+            .nav-item i {
+                font-size: 20px;
+            }
+        }
+
+        /* تأثيرات */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* نافذة إضافة مشروع */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-medium);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform var(--transition-medium);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Cairo';
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(10, 147, 150, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-submit {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-cancel:hover {
+            background: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط الحالة -->
+    <div class="status-bar">
+        <div class="status-time">
+            <i class="far fa-clock"></i>
+            <span id="currentTime">--:--</span>
+        </div>
+        <div class="status-icons">
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header class="app-header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="page-title">
+                <h1>مشاريعي</h1>
+                <span>إدارة وتتبع جميع مشاريعك في مكان واحد</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="header-action" onclick="toggleFilter()">
+                <i class="fas fa-filter"></i>
+            </div>
+            <div class="header-action" onclick="refreshProjects()">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم الفلترة -->
+    <section class="filter-section animate-fadeIn">
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterProjects('all')">
+                <span class="count">12</span>
+                الكل
+            </button>
+            <button class="filter-tab" onclick="filterProjects('active')">
+                <span class="count">5</span>
+                قيد التنفيذ
+            </button>
+            <button class="filter-tab" onclick="filterProjects('pending')">
+                <span class="count">3</span>
+                بانتظار المراجعة
+            </button>
+            <button class="filter-tab" onclick="filterProjects('completed')">
+                <span class="count">3</span>
+                مكتمل
+            </button>
+            <button class="filter-tab" onclick="filterProjects('archived')">
+                <span class="count">1</span>
+                الأرشيف
+            </button>
+        </div>
+        
+        <div class="filter-actions">
+            <div style="position: relative; flex: 2;">
+                <input type="text" class="search-box" placeholder="ابحث في مشاريعك..." id="projectSearch">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <select class="filter-select" id="sortProjects">
+                <option value="newest">الأحدث أولاً</option>
+                <option value="oldest">الأقدم أولاً</option>
+                <option value="price-high">السعر الأعلى</option>
+                <option value="price-low">السعر الأدنى</option>
+                <option value="deadline">أقرب موعد تسليم</option>
+            </select>
+            <button class="add-project-btn" onclick="openAddProjectModal()">
+                <i class="fas fa-plus"></i>
+                إضافة مشروع
+            </button>
+        </div>
+    </section>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- إحصائيات المشاريع -->
+        <section class="projects-stats animate-fadeIn">
+            <div class="stat-card" onclick="filterProjects('active')">
+                <div class="stat-icon active">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>5</h3>
+                    <p>مشاريع قيد التنفيذ</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="filterProjects('pending')">
+                <div class="stat-icon pending">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>3</h3>
+                    <p>بانتظار المراجعة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="filterProjects('completed')">
+                <div class="stat-icon completed">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>3</h3>
+                    <p>مشاريع مكتملة</p>
+                </div>
+            </div>
+            
+            <div class="stat-card" onclick="filterProjects('archived')">
+                <div class="stat-icon archived">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>1</h3>
+                    <p>في الأرشيف</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- عرض المشاريع -->
+        <section class="projects-view animate-fadeIn">
+            <div class="view-header">
+                <h2>مشاريعي الأخيرة</h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" onclick="changeView('grid')">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" onclick="changeView('list')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- عرض الشبكة -->
+            <div class="projects-grid" id="gridView">
+                <!-- مشروع 1 -->
+                <div class="project-card" onclick="openProjectDetails(1)">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="overlay-actions">
+                                <div class="overlay-btn" onclick="editProject(1, event)">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="shareProject(1, event)">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="archiveProject(1, event)">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #0a9396, #ee9b00);"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div class="project-title">
+                                <h3>تصميم شعار متكامل لمطعم</h3>
+                                <div class="project-client">
+                                    <i class="fas fa-user"></i>
+                                    العميل: أحمد التميمي
+                                </div>
+                            </div>
+                            <span class="project-status status-active">قيد التنفيذ</span>
+                        </div>
+                        <p class="project-description">
+                            تصميم شعار وهوية بصرية متكاملة لمطعم حديث متخصص في المأكولات الشعبية السعودية بأسلوب عصري وجذاب.
+                        </p>
+                        <div class="project-progress progress-active">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>65% مكتمل</span>
+                                <span>5 أيام متبقية</span>
+                            </div>
+                        </div>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="far fa-calendar-alt"></i>
+                                ينتهي في: 15 مارس
+                            </div>
+                            <div class="project-price">1,200 ريال</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مشروع 2 -->
+                <div class="project-card" onclick="openProjectDetails(2)">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="overlay-actions">
+                                <div class="overlay-btn" onclick="editProject(2, event)">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="shareProject(2, event)">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="archiveProject(2, event)">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #e9c46a, #e76f51);"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div class="project-title">
+                                <h3>هوية بصرية لشركة تقنية</h3>
+                                <div class="project-client">
+                                    <i class="fas fa-building"></i>
+                                    العميل: شركة التقنية المتقدمة
+                                </div>
+                            </div>
+                            <span class="project-status status-pending">بانتظار المراجعة</span>
+                        </div>
+                        <p class="project-description">
+                            تطوير هوية بصرية كاملة تشمل الشعار، الألوان، الخطوط، ودليل الاستخدام للشركة الجديدة.
+                        </p>
+                        <div class="project-progress progress-pending">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%;"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>100% مكتمل</span>
+                                <span>بانتظار المراجعة</span>
+                            </div>
+                        </div>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="fas fa-check-circle"></i>
+                                تم التسليم
+                            </div>
+                            <div class="project-price">3,500 ريال</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مشروع 3 -->
+                <div class="project-card" onclick="openProjectDetails(3)">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="overlay-actions">
+                                <div class="overlay-btn" onclick="editProject(3, event)">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="shareProject(3, event)">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="archiveProject(3, event)">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #2a9d8f, #0a9396);"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div class="project-title">
+                                <h3>تصميم موقع إلكتروني متكامل</h3>
+                                <div class="project-client">
+                                    <i class="fas fa-store"></i>
+                                    العميل: متجر الأثاث الراقي
+                                </div>
+                            </div>
+                            <span class="project-status status-completed">مكتمل</span>
+                        </div>
+                        <p class="project-description">
+                            تصميم وتطوير واجهة مستخدم متكاملة لمتجر إلكتروني متخصص في الأثاث الفاخر بتجربة مستخدم استثنائية.
+                        </p>
+                        <div class="project-progress progress-completed">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%;"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>100% مكتمل</span>
+                                <span>مشروع ناجح</span>
+                            </div>
+                        </div>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="fas fa-award"></i>
+                                تم التسليم
+                            </div>
+                            <div class="project-price">4,800 ريال</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مشروع 4 -->
+                <div class="project-card" onclick="openProjectDetails(4)">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="overlay-actions">
+                                <div class="overlay-btn" onclick="editProject(4, event)">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="shareProject(4, event)">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="overlay-btn" onclick="archiveProject(4, event)">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #ee9b00, #ca6702);"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div class="project-title">
+                                <h3>تصميم كتالوج منتجات</h3>
+                                <div class="project-client">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    العميل: شركة الإلكترونيات
+                                </div>
+                            </div>
+                            <span class="project-status status-active">قيد التنفيذ</span>
+                        </div>
+                        <p class="project-description">
+                            تصميم كتالوج منتجات إلكتروني مطبوع بعناصر تفاعلية وصور عالية الجودة لعرض منتجات الشركة.
+                        </p>
+                        <div class="project-progress progress-active">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%;"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>40% مكتمل</span>
+                                <span>10 أيام متبقية</span>
+                            </div>
+                        </div>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="far fa-calendar-alt"></i>
+                                ينتهي في: 25 مارس
+                            </div>
+                            <div class="project-price">2,300 ريال</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- عرض القائمة (مخفي افتراضياً) -->
+            <div class="projects-list" id="listView" style="display: none;">
+                <!-- مشروع في نمط القائمة -->
+                <div class="project-item" onclick="openProjectDetails(1)">
+                    <div class="item-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #0a9396, #ee9b00);"></div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div class="item-title">
+                                <h3>تصميم شعار متكامل لمطعم</h3>
+                                <div class="item-client">
+                                    <i class="fas fa-user"></i>
+                                    العميل: أحمد التميمي
+                                </div>
+                            </div>
+                            <span class="project-status status-active">قيد التنفيذ</span>
+                        </div>
+                        <p class="item-description">
+                            تصميم شعار وهوية بصرية متكاملة لمطعم حديث متخصص في المأكولات الشعبية السعودية بأسلوب عصري وجذاب.
+                        </p>
+                        <div class="item-footer">
+                            <div class="item-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">الموعد النهائي</span>
+                                    <span class="meta-value">15 مارس</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">التقدم</span>
+                                    <span class="meta-value">65%</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">السعر</span>
+                                    <span class="meta-value">1,200 ريال</span>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <div class="item-action" onclick="editProject(1, event)">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="item-action" onclick="shareProject(1, event)">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="item-action" onclick="archiveProject(1, event)">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- مشاريع مقترحة -->
+        <section class="suggested-projects animate-fadeIn">
+            <div class="suggested-header">
+                <h2>مشاريع مقترحة لك</h2>
+                <button class="view-all" onclick="viewAllSuggested()" style="background: none; border: none; color: var(--secondary-light); font-size: 14px; cursor: pointer;">
+                    عرض الكل
+                </button>
+            </div>
+            <div class="suggested-slider">
+                <!-- مشروع مقترح 1 -->
+                <div class="suggested-card">
+                    <span class="suggested-badge">عاجل</span>
+                    <div class="suggested-title">
+                        <h4>تصميم تطبيق جوال للخدمات</h4>
+                    </div>
+                    <p class="suggested-description">
+                        مطلوب مصمم UI/UX لتصميم تطبيق جوال للخدمات المنزلية بواجهة عربية سلسة وسهلة الاستخدام.
+                    </p>
+                    <div class="suggested-details">
+                        <div class="suggested-price">3,500 ريال</div>
+                        <button class="apply-btn" onclick="applyToProject('mobile-app')">تقديم عرض</button>
+                    </div>
+                </div>
+
+                <!-- مشروع مقترح 2 -->
+                <div class="suggested-card">
+                    <span class="suggested-badge">جديد</span>
+                    <div class="suggested-title">
+                        <h4>مونتاج فيديو تعليمي</h4>
+                    </div>
+                    <p class="suggested-description">
+                        مطلوب مونتير فيديو محترف لتحرير سلسلة فيديوهات تعليمية لمدة 10 حلقات مع إضافة مؤثرات.
+                    </p>
+                    <div class="suggested-details">
+                        <div class="suggested-price">2,800 ريال</div>
+                        <button class="apply-btn" onclick="applyToProject('video-editing')">تقديم عرض</button>
+                    </div>
+                </div>
+
+                <!-- مشروع مقترح 3 -->
+                <div class="suggested-card">
+                    <span class="suggested-badge">مميز</span>
+                    <div class="suggested-title">
+                        <h4>تصميم هوية لشركة ناشئة</h4>
+                    </div>
+                    <p class="suggested-description">
+                        شركة تقنية ناشئة تبحث عن مصمم جرافيك لإنشاء هوية بصرية كاملة تعبر عن رؤية الشركة.
+                    </p>
+                    <div class="suggested-details">
+                        <div class="suggested-price">4,200 ريال</div>
+                        <button class="apply-btn" onclick="applyToProject('brand-identity')">تقديم عرض</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- تحميل المزيد -->
+        <div class="load-more">
+            <button class="load-btn" onclick="loadMoreProjects()">
+                <i class="fas fa-plus"></i>
+                تحميل المزيد من المشاريع
+            </button>
+        </div>
+    </main>
+
+    <!-- نافذة إضافة مشروع -->
+    <div class="modal-overlay" id="addProjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة مشروع جديد</h2>
+                <button class="modal-close" onclick="closeAddProjectModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addProjectForm">
+                <div class="form-group">
+                    <label class="form-label" for="projectName">اسم المشروع</label>
+                    <input type="text" class="form-input" id="projectName" placeholder="أدخل اسم المشروع" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="projectClient">اسم العميل</label>
+                    <input type="text" class="form-input" id="projectClient" placeholder="أدخل اسم العميل" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="projectDescription">وصف المشروع</label>
+                    <textarea class="form-input form-textarea" id="projectDescription" placeholder="أدخل وصفاً مفصلاً للمشروع" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="projectPrice">سعر المشروع (ريال)</label>
+                    <input type="number" class="form-input" id="projectPrice" placeholder="أدخل سعر المشروع" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="projectDeadline">الموعد النهائي</label>
+                    <input type="date" class="form-input" id="projectDeadline" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="projectCategory">فئة المشروع</label>
+                    <select class="form-input" id="projectCategory" required>
+                        <option value="">اختر الفئة</option>
+                        <option value="logo-design">تصميم الشعارات</option>
+                        <option value="branding">الهوية البصرية</option>
+                        <option value="web-design">تصميم الويب</option>
+                        <option value="ui-ux">تصميم UI/UX</option>
+                        <option value="print-design">التصميم المطبوع</option>
+                        <option value="video-editing">مونتاج الفيديو</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddProjectModal()">إلغاء</button>
+                    <button type="submit" class="btn-submit">إضافة المشروع</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <nav class="bottom-nav">
+        <a href="dashboard-designer.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        
+        <a href="my-projects.html" class="nav-item active">
+            <i class="fas fa-project-diagram"></i>
+            <span>مشاريعي</span>
+        </a>
+        
+        <a href="services.html" class="nav-item">
+            <i class="fas fa-cogs"></i>
+            <span>الخدمات</span>
+        </a>
+        
+        <a href="jobs.html" class="nav-item">
+            <i class="fas fa-briefcase"></i>
+            <span>الوظائف</span>
+        </a>
+        
+        <a href="messages.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>الرسائل</span>
+        </a>
+    </nav>
+
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            setupEventListeners();
+            loadProjectsData();
+        });
+
+        // تحديث الوقت
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-SA', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // إعداد المستمعين للأحداث
+        function setupEventListeners() {
+            // البحث في المشاريع
+            const searchInput = document.getElementById('projectSearch');
+            searchInput.addEventListener('input', function() {
+                filterProjectsBySearch(this.value);
+            });
+
+            // ترتيب المشاريع
+            const sortSelect = document.getElementById('sortProjects');
+            sortSelect.addEventListener('change', function() {
+                sortProjects(this.value);
+            });
+
+            // نموذج إضافة مشروع
+            const addProjectForm = document.getElementById('addProjectForm');
+            addProjectForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                addNewProject();
+            });
+        }
+
+        // تحميل بيانات المشاريع
+        function loadProjectsData() {
+            // في التطبيق الحقيقي: جلب البيانات من API
+            console.log('تحميل بيانات المشاريع...');
+        }
+
+        // العودة للصفحة السابقة
+        function goBack() {
+            window.history.back();
+        }
+
+        // تبديل الفلتر
+        function toggleFilter() {
+            const filterSection = document.querySelector('.filter-section');
+            filterSection.style.display = filterSection.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // تحديث المشاريع
+        function refreshProjects() {
+            showNotification('جاري تحديث قائمة المشاريع...', 'info');
+            setTimeout(() => {
+                showNotification('تم تحديث المشاريع بنجاح!', 'success');
+            }, 1000);
+        }
+
+        // تصفية المشاريع حسب الحالة
+        function filterProjects(status) {
+            const tabs = document.querySelectorAll('.filter-tab');
+            const projects = document.querySelectorAll('.project-card, .project-item');
+            
+            // تحديث التبويب النشط
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // تصفية المشاريع
+            projects.forEach(project => {
+                const projectStatus = project.querySelector('.project-status').classList.contains(`status-${status}`);
+                
+                if (status === 'all' || projectStatus) {
+                    project.style.display = 'flex';
+                    setTimeout(() => {
+                        project.style.opacity = '1';
+                        project.style.transform = project.classList.contains('project-card') ? 'translateY(0)' : 'translateX(0)';
+                    }, 100);
+                } else {
+                    project.style.opacity = '0';
+                    project.style.transform = project.classList.contains('project-card') ? 'translateY(10px)' : 'translateX(-10px)';
+                    setTimeout(() => {
+                        project.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // تصفية المشاريع بالبحث
+        function filterProjectsBySearch(searchTerm) {
+            const projects = document.querySelectorAll('.project-card, .project-item');
+            searchTerm = searchTerm.toLowerCase();
+            
+            projects.forEach(project => {
+                const title = project.querySelector('h3').textContent.toLowerCase();
+                const description = project.querySelector('.project-description, .item-description').textContent.toLowerCase();
+                const client = project.querySelector('.project-client, .item-client').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || client.includes(searchTerm)) {
+                    project.style.display = 'flex';
+                    setTimeout(() => {
+                        project.style.opacity = '1';
+                        project.style.transform = project.classList.contains('project-card') ? 'translateY(0)' : 'translateX(0)';
+                    }, 100);
+                } else {
+                    project.style.opacity = '0';
+                    project.style.transform = project.classList.contains('project-card') ? 'translateY(10px)' : 'translateX(-10px)';
+                    setTimeout(() => {
+                        project.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // ترتيب المشاريع
+        function sortProjects(criteria) {
+            showNotification(`جاري ترتيب المشاريع حسب ${getSortCriteriaText(criteria)}...`, 'info');
+            // في التطبيق الحقيقي: ترتيب المصفوفة وإعادة العرض
+        }
+
+        function getSortCriteriaText(criteria) {
+            const texts = {
+                'newest': 'الأحدث',
+                'oldest': 'الأقدم',
+                'price-high': 'السعر الأعلى',
+                'price-low': 'السعر الأدنى',
+                'deadline': 'أقرب موعد تسليم'
+            };
+            return texts[criteria] || criteria;
+        }
+
+        // تغيير طريقة العرض
+        function changeView(viewType) {
+            const gridView = document.getElementById('gridView');
+            const listView = document.getElementById('listView');
+            const viewBtns = document.querySelectorAll('.view-btn');
+            
+            viewBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (viewType === 'grid') {
+                gridView.style.display = 'grid';
+                listView.style.display = 'none';
+            } else {
+                gridView.style.display = 'none';
+                listView.style.display = 'flex';
+            }
+        }
+
+        // فتح تفاصيل المشروع
+        function openProjectDetails(projectId) {
+            window.location.href = `project-details.html?id=${projectId}`;
+        }
+
+        // تحرير المشروع
+        function editProject(projectId, event) {
+            if (event) event.stopPropagation();
+            showNotification(`جاري فتح تحرير المشروع ${projectId}...`, 'info');
+            // في التطبيق الحقيقي: فتح نموذج التحرير
+        }
+
+        // مشاركة المشروع
+        function shareProject(projectId, event) {
+            if (event) event.stopPropagation();
+            const projectName = document.querySelectorAll('.project-card')[projectId - 1].querySelector('h3').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: projectName,
+                    text: 'تفضل بمشاهدة مشروعي الجديد',
+                    url: window.location.href,
+                });
+            } else {
+                prompt('انسخ الرابط للمشاركة:', window.location.href);
+            }
+        }
+
+        // أرشفة المشروع
+        function archiveProject(projectId, event) {
+            if (event) event.stopPropagation();
+            const projectName = document.querySelectorAll('.project-card')[projectId - 1].querySelector('h3').textContent;
+            
+            if (confirm(`هل تريد أرشفة المشروع "${projectName}"؟`)) {
+                showNotification('جاري أرشفة المشروع...', 'info');
+                setTimeout(() => {
+                    showNotification(`تم أرشفة المشروع "${projectName}" بنجاح`, 'success');
+                }, 1500);
+            }
+        }
+
+        // التقديم على مشروع مقترح
+        function applyToProject(projectType) {
+            showNotification('جاري تحويلك لصفحة التقديم...', 'info');
+            setTimeout(() => {
+                // في التطبيق الحقيقي: توجيه لصفحة التقديم
+                alert('سيتم توجيهك لصفحة تقديم العرض للمشروع');
+            }, 1000);
+        }
+
+        // عرض جميع المشاريع المقترحة
+        function viewAllSuggested() {
+            window.location.href = 'jobs.html';
+        }
+
+        // تحميل المزيد من المشاريع
+        function loadMoreProjects() {
+            const loadBtn = document.querySelector('.load-btn');
+            loadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+            loadBtn.disabled = true;
+            
+            setTimeout(() => {
+                // محاكاة تحميل مشاريع جديدة
+                showNotification('تم تحميل 3 مشاريع جديدة', 'success');
+                loadBtn.innerHTML = '<i class="fas fa-plus"></i> تحميل المزيد من المشاريع';
+                loadBtn.disabled = false;
+            }, 2000);
+        }
+
+        // فتح نافذة إضافة مشروع
+        function openAddProjectModal() {
+            document.getElementById('addProjectModal').classList.add('active');
+        }
+
+        // إغلاق نافذة إضافة مشروع
+        function closeAddProjectModal() {
+            document.getElementById('addProjectModal').classList.remove('active');
+            document.getElementById('addProjectForm').reset();
+        }
+
+        // إضافة مشروع جديد
+        function addNewProject() {
+            const projectName = document.getElementById('projectName').value;
+            const projectClient = document.getElementById('projectClient').value;
+            
+            showNotification('جاري إضافة المشروع الجديد...', 'info');
+            
+            setTimeout(() => {
+                showNotification(`تم إضافة المشروع "${projectName}" للعميل ${projectClient} بنجاح`, 'success');
+                closeAddProjectModal();
+                
+                // في التطبيق الحقيقي: إرسال البيانات للسيرفر وإعادة تحميل القائمة
+            }, 1500);
+        }
+
+        // إظهار الإشعارات
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : 'var(--primary-color)'};
+                color: white;
+                padding: 15px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                z-index: 9999;
+                box-shadow: var(--shadow-lg);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // إضافة أنماط للتحريك
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateY(-20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateY(0); opacity: 1; }
+                to { transform: translateY(-20px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
